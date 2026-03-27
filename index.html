@@ -314,6 +314,62 @@ a{color:inherit;text-decoration:none}
   .email-layout .email-view{display:none}
   .content{padding:16px}
 }
+
+/* ── AGENDA PAGE ── */
+.agenda-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.agenda-nav-btn{background:var(--bg2);border:1px solid var(--border);border-radius:var(--rsm);width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;color:var(--ink2);transition:background var(--t);flex-shrink:0}
+.agenda-nav-btn:hover{background:var(--bg3)}
+.agenda-date-label{font-size:14px;font-weight:500;color:var(--ink);min-width:150px;text-align:center}
+.view-tabs{display:flex;background:var(--bg2);border-radius:var(--rsm);padding:3px;gap:2px}
+.view-tab{padding:5px 14px;border-radius:5px;border:none;background:none;cursor:pointer;font-size:12px;color:var(--ink2);font-family:var(--font-sans);transition:all var(--t)}
+.view-tab.active{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:var(--shadow)}
+.agenda-grid{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.ag-day-ev{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--t)}
+.ag-day-ev:hover{background:var(--bg)}
+.ag-day-ev:last-child{border-bottom:none}
+.ag-ev-time{font-size:11px;font-weight:600;color:var(--ink3);min-width:44px;padding-top:1px}
+.ag-ev-bar{width:3px;border-radius:2px;min-height:32px;flex-shrink:0;margin-top:2px}
+.ag-ev-body{flex:1}
+.ag-ev-title{font-size:13px;font-weight:500;color:var(--ink)}
+.ag-ev-meta{font-size:11px;color:var(--ink3);margin-top:2px}
+/* Week grid */
+.wk-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;padding:12px}
+.wk-col{background:var(--bg);border-radius:var(--rsm);padding:8px;min-height:100px}
+.wk-col.today-col{background:var(--terra-bg);border:1px solid rgba(196,113,74,0.2)}
+.wk-col-header{font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:6px;text-align:center}
+.wk-col-header .wk-date-num{font-size:14px;font-weight:500;color:var(--ink);display:block;margin-top:1px}
+.wk-col-header.today-h .wk-date-num{background:var(--terra);color:white;width:24px;height:24px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.wk-ev{font-size:10.5px;padding:3px 5px;border-radius:3px;margin-bottom:3px;color:white;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;cursor:pointer}
+/* Month grid */
+.mo-grid-hdr{display:grid;grid-template-columns:repeat(7,1fr);background:var(--bg);border-bottom:1px solid var(--border)}
+.mo-th{padding:8px;text-align:center;font-size:11px;font-weight:600;color:var(--ink2)}
+.mo-grid{display:grid;grid-template-columns:repeat(7,1fr)}
+.mo-day{min-height:70px;padding:5px 6px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);cursor:pointer;transition:background var(--t)}
+.mo-day:hover{background:var(--bg)}
+.mo-day:nth-child(7n){border-right:none}
+.mo-day-num{font-size:11px;color:var(--ink2);margin-bottom:3px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.mo-day-num.today{background:var(--terra);color:white;font-weight:600}
+.mo-day-num.other{color:var(--ink3)}
+.mo-ev-dot{font-size:10px;padding:1px 4px;border-radius:2px;margin-bottom:1px;color:white;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.mo-more{font-size:10px;color:var(--ink3)}
+/* Birthday */
+.bday-card{background:var(--terra-bg);border:1px solid rgba(196,113,74,0.25);border-radius:var(--rsm);padding:10px 14px;margin-bottom:8px}
+.bday-today-item{display:flex;align-items:center;gap:8px;padding:5px 0}
+.bday-item{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)}
+.bday-item:last-child{border-bottom:none}
+/* Twitch */
+.tw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.tw-stat{background:var(--bg);border-radius:var(--rsm);padding:8px 10px;text-align:center}
+.tw-stat-val{font-family:var(--font-serif);font-size:18px;color:var(--ink)}
+.tw-stat-label{font-size:9px;color:var(--ink3);text-transform:uppercase;letter-spacing:.04em;margin-top:1px}
+.tw-live{display:inline-flex;align-items:center;gap:4px;background:#9146ff;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:3px;margin-bottom:6px}
+.tw-live-dot{width:5px;height:5px;border-radius:50%;background:#ff4444;animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* Action preview */
+.action-preview{background:var(--sage-bg);border:1px solid rgba(90,122,101,0.3);border-radius:var(--rsm);padding:10px 12px;margin:6px 0}
+.ap-label{font-size:10px;font-weight:700;color:var(--sage);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.ap-confirm{display:flex;gap:6px;margin-top:8px}
+
 </style>
 </head>
 <body>
@@ -337,6 +393,10 @@ a{color:inherit;text-decoration:none}
     <button class="nb" onclick="nav('today',this)">
       <div class="nb-icon">◎</div><span>Aujourd'hui</span>
       <span class="nb-badge" id="nb-today-count">—</span>
+    </button>
+    <button class="nb" id="nb-agenda-btn" onclick="nav('agenda',this)">
+      <div class="nb-icon">📅</div><span>Agenda</span>
+      <span class="nb-badge" id="nb-agenda-count" style="display:none">0</span>
     </button>
     <button class="nb" onclick="nav('emails',this)">
       <div class="nb-icon">✉</div><span>Emails</span>
@@ -404,6 +464,9 @@ a{color:inherit;text-decoration:none}
               </div>
               <div class="msg-chips" id="welcome-chips">
                 <div class="chip" onclick="quickMsg('Quelles sont mes priorités pour aujourd\'hui ?')">📋 Mes priorités</div>
+                <div class="chip" onclick="nav('agenda', document.getElementById('nb-agenda-btn'))">📅 Mon agenda</div>
+                <div class="chip" onclick="prefill('Ajoute une tâche : ')">+ Tâche rapide</div>
+                <div class="chip" onclick="prefill('Planifie un créneau : ')">+ Événement</div>
                 <div class="chip" onclick="quickMsg('Résume ce que j\'ai à faire cette semaine')">📅 Vue semaine</div>
                 <div class="chip" onclick="nav('emails', document.querySelector(\'.nb:nth-child(3)\'))">✉ Connecter Gmail</div>
                 <div class="chip claude" onclick="openClaude('Aide-moi à organiser ma semaine en tant que multi-entrepreneur avec 4 activités : Attard Multimédia, YM BOOST, JDE Agency et Bobulfilas Twitch')">✦ Approfondir avec Claude →</div>
@@ -459,10 +522,6 @@ a{color:inherit;text-decoration:none}
               <input class="todo-add-in" placeholder="Ajouter une tâche (Entrée pour valider)..." onkeydown="addTodo(event,this)">
             </div>
           </div>
-          <div class="pcrd" style="margin-top:16px">
-            <div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><span>↻ Tâches récurrentes</span><button class="btn-ghost btn-sm" style="font-size:10px;padding:3px 8px" onclick="openModal('recurring-modal')">+ Configurer</button></div>
-            <div id="recurring-task-list"><div style="font-size:12px;color:var(--ink3);font-style:italic;padding:6px 0">Aucune tâche récurrente configurée</div></div>
-          </div>
         </div>
         <div>
           <div class="pcrd">
@@ -478,10 +537,6 @@ a{color:inherit;text-decoration:none}
           <div class="pcrd">
             <div class="card-title">Tâches par activité</div>
             <div id="task-by-act"></div>
-          </div>
-          <div class="pcrd">
-            <div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><span>📁 Fichiers récents</span><span style="font-size:10px;color:var(--ink3)" id="drive-status"></span></div>
-            <div id="drive-files-list"><div style="font-size:12px;color:var(--ink3);font-style:italic">Connectez un compte pour voir vos fichiers Drive</div></div>
           </div>
           <div class="pcrd" style="border-color:rgba(196,113,74,0.3);background:var(--terra-bg)">
             <div class="card-title" style="color:var(--terra)">✦ ARIA suggère</div>
@@ -611,6 +666,34 @@ a{color:inherit;text-decoration:none}
       </div>
     </div>
 
+    <!-- ══ PAGE AGENDA ══ -->
+    <div class="page" id="page-agenda">
+      <div class="section-header">
+        <div><div class="section-title">Agenda</div><div class="section-sub" id="agenda-sub">Chargez vos événements en connectant Gmail</div></div>
+        <button class="btn-primary btn-sm" onclick="openCreateEventModal()">+ Événement</button>
+      </div>
+      <div class="agenda-toolbar">
+        <div style="display:flex;gap:4px;align-items:center">
+          <button class="agenda-nav-btn" onclick="agendaNav(-1)">&#8249;</button>
+          <div class="agenda-date-label" id="agenda-date-label">—</div>
+          <button class="agenda-nav-btn" onclick="agendaNav(1)">&#8250;</button>
+          <button class="btn-ghost btn-sm" onclick="agendaGoToday()" style="margin-left:6px;font-size:11px">Aujourd'hui</button>
+        </div>
+        <div class="view-tabs">
+          <button class="view-tab active" id="vt-day" onclick="setCalView('day',this)">Jour</button>
+          <button class="view-tab" id="vt-week" onclick="setCalView('week',this)">Semaine</button>
+          <button class="view-tab" id="vt-month" onclick="setCalView('month',this)">Mois</button>
+        </div>
+      </div>
+      <div id="agenda-birthdays-row" style="margin-bottom:12px"></div>
+      <div class="agenda-grid" id="agenda-content">
+        <div style="padding:40px;text-align:center;color:var(--ink3);font-size:13px">
+          <div style="font-size:28px;margin-bottom:10px">📅</div>
+          Connectez un compte Gmail pour voir vos événements
+        </div>
+      </div>
+    </div>
+
     <!-- ══ PAGE FINANCE ══ -->
     <div class="page" id="page-finance">
       <div class="section-header">
@@ -719,23 +802,21 @@ a{color:inherit;text-decoration:none}
           <div class="int-desc">Alternative IA — ARIA ouvre ChatGPT avec le contexte pré-rempli. Utilise ton abonnement existant.</div>
           <button class="btn-connected">✓ Actif — utilise ton abonnement</button>
         </div>
-        <div class="int-card" id="int-card-calendar">
+        <div class="int-card">
           <div class="int-top">
             <div class="int-logo">📅</div>
             <div><div class="int-name">Google Calendar</div><div class="int-cat">Agenda unifié</div></div>
           </div>
-          <div class="int-desc">Vos événements s'affichent automatiquement dans Aujourd'hui dès qu'un compte Gmail est connecté.</div>
-          <div id="status-int-calendar" style="font-size:11px;color:var(--ink3);margin-bottom:8px"></div>
-          <button class="btn-connect" onclick="nav('today', document.querySelector('.nb'))">Voir l'agenda →</button>
+          <div class="int-desc">Prochaine étape — voir tous vos agendas en un seul endroit une fois Gmail connecté.</div>
+          <button class="btn-connect" onclick="alert('Connectez d\'abord vos comptes Gmail — le calendrier s\'active automatiquement avec la même OAuth.')">Bientôt disponible</button>
         </div>
         <div class="int-card">
           <div class="int-top">
             <div class="int-logo">📁</div>
             <div><div class="int-name">Google Drive</div><div class="int-cat">Factures & documents</div></div>
           </div>
-          <div class="int-desc">Vos 8 derniers fichiers Drive s'affichent dans "Aujourd'hui". Reconnectez vos comptes pour activer Drive.</div>
-          <div id="status-int-drive" style="font-size:11px;color:var(--ink3);margin-bottom:8px"></div>
-          <button class="btn-connect" onclick="nav('today', document.querySelector('.nb'))">Voir les fichiers →</button>
+          <div class="int-desc">Ranger automatiquement vos documents dans les bons dossiers par activité.</div>
+          <button class="btn-connect" onclick="alert('Disponible après connexion Gmail.')">Bientôt disponible</button>
         </div>
       </div>
 
@@ -855,40 +936,74 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
-<!-- Recurring task modal -->
-<div class="modal-ov" id="recurring-modal" onclick="closeMOV(event,'recurring-modal')">
+<!-- Twitch modal -->
+<div class="modal-ov" id="twitch-modal" onclick="closeMOV(event,'twitch-modal')">
   <div class="modal">
-    <div class="mh"><div class="mh-title">Tâche récurrente</div><button class="mc" onclick="closeModal('recurring-modal')">✕</button></div>
+    <div class="mh"><div class="mh-title">Connecter Twitch</div><button class="mc" onclick="closeModal('twitch-modal')">&#x2715;</button></div>
     <div class="mb">
-      <div class="fl"><label>Tâche *</label><input type="text" class="fi" id="rec-text" placeholder="Que devez-vous faire ?"></div>
-      <div class="fr">
-        <div class="fl"><label>Activité</label><select class="fs" id="rec-act"><option value="am">Attard MM</option><option value="ym">YM BOOST</option><option value="jde">JDE Agency</option><option value="bob">Bobulfilas</option><option value="">Général</option></select></div>
-        <div class="fl"><label>Niveau</label><select class="fs" id="rec-level"><option value="urgent">Non négociable</option><option value="important" selected>Important</option><option value="bonus">Si le temps</option></select></div>
+      <div style="padding:10px 12px;background:var(--caution-bg);border-radius:var(--rsm);border:1px solid rgba(160,112,48,0.2);margin-bottom:12px;font-size:12px;color:var(--ink2)">
+        Pour obtenir votre token : allez sur <strong>twitchapps.com/tmi</strong> ou <strong>twitchtokengenerator.com</strong>, connectez-vous et copiez le token g&eacute;n&eacute;r&eacute;.
       </div>
-      <div class="fl"><label>Récurrence</label>
-        <select class="fs" id="rec-freq" onchange="toggleRecDays()">
-          <option value="daily">Chaque jour</option>
-          <option value="weekdays">Jours outrés (Lun–Ven)</option>
-          <option value="weekly">Certains jours de la semaine</option>
-          <option value="monthly">Mensuel (même date)</option>
-        </select>
-      </div>
-      <div class="fl" id="rec-days-row" style="display:none">
-        <label>Jours</label>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="1" class="rec-day"> Lun</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="2" class="rec-day"> Mar</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="3" class="rec-day"> Mer</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="4" class="rec-day"> Jeu</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="5" class="rec-day"> Ven</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="6" class="rec-day"> Sam</label>
-          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="0" class="rec-day"> Dim</label>
-        </div>
-      </div>
+      <div class="fl"><label>Client ID Twitch</label><input type="text" class="fi" id="twitch-client-id" placeholder="Votre Twitch Client ID (depuis dev.twitch.tv)"></div>
+      <div class="fl"><label>OAuth Token</label><input type="password" class="fi" id="twitch-token-input" placeholder="oauth:xxxxxxxxxx ou Bearer token"></div>
     </div>
     <div class="mf">
-      <button class="btn-ghost btn-sm" onclick="closeModal('recurring-modal')">Annuler</button>
-      <button class="btn-primary btn-sm" onclick="createRecurringTask()">Créer</button>
+      <button class="btn-ghost btn-sm" onclick="closeModal('twitch-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="saveTwitchCredentials()">Connecter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Notion modal -->
+<div class="modal-ov" id="notion-modal" onclick="closeMOV(event,'notion-modal')">
+  <div class="modal" style="max-width:500px">
+    <div class="mh"><div class="mh-title">Connecter Notion</div><button class="mc" onclick="closeModal('notion-modal')">&#x2715;</button></div>
+    <div class="mb">
+      <div style="padding:10px 12px;background:var(--sage-bg);border-radius:var(--rsm);border:1px solid rgba(90,122,101,0.2);margin-bottom:12px;font-size:12px;color:var(--ink2)">
+        Cr&eacute;ez une int&eacute;gration sur <strong>notion.so/my-integrations</strong> et copiez le token. Note : l'API Notion n'autorise pas les requ&ecirc;tes directes depuis un navigateur (CORS) &mdash; les liens s'ouvriront dans Notion.
+      </div>
+      <div class="fl"><label>Token Notion (g&eacute;n&eacute;ral)</label><input type="password" class="fi" id="notion-token-general" placeholder="secret_..."></div>
+      <div style="font-size:11px;color:var(--ink3);margin:8px 0 4px">URLs de vos bases de travail</div>
+      <div class="fl"><label>Attard MM</label><input type="text" class="fi" id="notion-url-am" placeholder="https://notion.so/..."></div>
+      <div class="fl"><label>YM BOOST</label><input type="text" class="fi" id="notion-url-ym" placeholder="https://notion.so/..."></div>
+      <div class="fl"><label>JDE Agency</label><input type="text" class="fi" id="notion-url-jde" placeholder="https://notion.so/..."></div>
+      <div class="fl"><label>Bobulfilas</label><input type="text" class="fi" id="notion-url-bob" placeholder="https://notion.so/..."></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('notion-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="saveNotionConfig()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- SumUp modal -->
+<div class="modal-ov" id="sumup-modal" onclick="closeMOV(event,'sumup-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Configurer SumUp</div><button class="mc" onclick="closeModal('sumup-modal')">&#x2715;</button></div>
+    <div class="mb">
+      <div style="padding:10px 12px;background:var(--sage-bg);border-radius:var(--rsm);border:1px solid rgba(90,122,101,0.2);margin-bottom:12px;font-size:12px;color:var(--ink2)">
+        L'API SumUp n'autorise pas les appels depuis un navigateur (CORS). ARIA stocke votre token et vous redirige vers SumUp pour les actions. Obtenez votre token sur <strong>developer.sumup.com</strong>.
+      </div>
+      <div class="fl"><label>Token SumUp (Bearer)</label><input type="password" class="fi" id="sumup-token-input" placeholder="Votre token SumUp"></div>
+      <div class="fl"><label>Merchant ID (optionnel)</label><input type="text" class="fi" id="sumup-merchant-id" placeholder="Votre Merchant ID"></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('sumup-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="saveSumupConfig()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Make modal -->
+<div class="modal-ov" id="make-modal" onclick="closeMOV(event,'make-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Connecter Make</div><button class="mc" onclick="closeModal('make-modal')">&#x2715;</button></div>
+    <div class="mb">
+      <div class="fl"><label>Cl&eacute; API Make</label><input type="password" class="fi" id="make-token-input" placeholder="Votre cl&eacute; API Make"></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('make-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="saveMakeConfig()">Enregistrer</button>
     </div>
   </div>
 </div>
@@ -901,7 +1016,7 @@ a{color:inherit;text-decoration:none}
 // CONFIG
 // ══════════════════════════════════════════
 const CLIENT_ID = '932930451924-p0h6ao9elkp0o1a9qkg788pqs6d406a3.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/drive.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly';
 
 const ACCOUNTS = {
   am:    { label:'Attard MM',       email:'hub.attard@gmail.com',          color:'var(--am)',    tag:'t-am'   },
@@ -921,9 +1036,6 @@ let state = {
   invoices: [],
   transactions: [],
   currentNote: null,
-  calEvents: [],
-  driveFiles: [],
-  recurringTasks: [],
 };
 
 // Load persisted state
@@ -936,8 +1048,7 @@ function loadState() {
       state.notes        = parsed.notes        || [];
       state.invoices     = parsed.invoices     || defaultInvoices();
       state.transactions = parsed.transactions || defaultTxns();
-      state.tokens          = parsed.tokens          || {};
-      state.recurringTasks  = parsed.recurringTasks  || [];
+      state.tokens       = parsed.tokens       || {};
     } else {
       state.invoices     = defaultInvoices();
       state.transactions = defaultTxns();
@@ -956,7 +1067,6 @@ function saveState() {
       invoices: state.invoices,
       transactions: state.transactions,
       tokens: state.tokens,
-      recurringTasks: state.recurringTasks,
     }));
   } catch(e) {}
 }
@@ -966,7 +1076,6 @@ function saveState() {
 // ══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
-  generateRecurringTasksForToday();
   setDates();
   renderAll();
   checkConnectedAccounts();
@@ -993,9 +1102,6 @@ function renderAll() {
   renderFinance();
   renderNoteList();
   updateEmailBadge();
-  renderCalendarEvents();
-  renderDriveFiles();
-  renderRecurringTaskList();
 }
 
 // ══════════════════════════════════════════
@@ -1013,7 +1119,7 @@ function nav(id, btn) {
   document.getElementById('page-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   document.getElementById('tb-title').textContent = PAGE_TITLES[id] || '';
-  if (id === 'today') { renderTodos(); renderCalendarEvents(); renderDriveFiles(); renderRecurringTaskList(); }
+  if (id === 'today') renderTodos();
   if (id === 'notes') renderNoteList();
   if (id === 'finance') renderFinance();
   if (id === 'emails') renderEmailPage();
@@ -1045,14 +1151,6 @@ function connectGmail(accountKey) {
       saveState();
       updateAccountStatus(accountKey, true);
       fetchEmailsForAccount(accountKey, response.access_token);
-      fetchCalendarEvents(accountKey, response.access_token).then(evs => {
-        state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
-        renderCalendarEvents();
-      });
-      fetchDriveFiles(accountKey, response.access_token).then(files => {
-        state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
-        renderDriveFiles();
-      });
     },
   });
   tokenClient.requestAccessToken();
@@ -1083,14 +1181,6 @@ function handleOAuthRedirect() {
     saveState();
     updateAccountStatus(accountKey, true);
     fetchEmailsForAccount(accountKey, token);
-    fetchCalendarEvents(accountKey, token).then(evs => {
-      state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
-      renderCalendarEvents();
-    });
-    fetchDriveFiles(accountKey, token).then(files => {
-      state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
-      renderDriveFiles();
-    });
     window.history.replaceState({}, '', window.location.pathname);
   }
 }
@@ -1131,7 +1221,7 @@ async function fetchEmailsForAccount(accountKey, token) {
     // Fetch each message (parallel, max 10)
     const fetched = await Promise.all(
       messages.slice(0, 15).map(m =>
-        fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date&metadataHeaders=To`,
+        fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`,
           { headers: { Authorization: 'Bearer ' + token } }
         ).then(r => r.json())
       )
@@ -1148,16 +1238,6 @@ async function fetchEmailsForAccount(accountKey, token) {
 
     // Update briefing
     updateBriefingFromEmails();
-
-    // Also fetch Calendar and Drive with same token
-    fetchCalendarEvents(accountKey, token).then(evs => {
-      state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
-      renderCalendarEvents();
-    });
-    fetchDriveFiles(accountKey, token).then(files => {
-      state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
-      renderDriveFiles();
-    });
 
   } catch(err) {
     console.error('Gmail fetch error:', err);
@@ -1183,24 +1263,13 @@ function parseGmailMessage(msg, accountKey) {
   const fromName  = fromMatch ? fromMatch[1].replace(/"/g,'').trim() : from;
   const fromEmail = from.match(/<(.+?)>/)? from.match(/<(.+?)>/)[1] : from;
 
-  // Auto-detect priority (labels + keywords)
-  const isStarred = msg.labelIds?.includes('IMPORTANT') || msg.labelIds?.includes('STARRED');
-  const urgentKeywords = /urgent|asap|rappel|relance|deadline|demain|aujourd'hui|impayé|retard|action requise|réponse urgente/i;
-  const highPrioSubject = /devis|facture|contrat|signature|validation|appel d|réunion|brief|proposition/i;
-  let priority = 'normal';
-  if (urgentKeywords.test(subject + snippet)) priority = 'urgent';
-  else if (isStarred || highPrioSubject.test(subject)) priority = 'high';
-  // Detect activity from Gmail labels
-  const labelIds = msg.labelIds || [];
-  let detectedAct = accountKey;
-  if (labelIds.some(l => /attard/i.test(l))) detectedAct = 'am';
-  else if (labelIds.some(l => /ym.?boost|ymboost/i.test(l))) detectedAct = 'ym';
-  else if (labelIds.some(l => /jde/i.test(l))) detectedAct = 'jde';
-  else if (labelIds.some(l => /bob|twitch/i.test(l))) detectedAct = 'bob';
+  // Auto-detect priority
+  const urgentKeywords = /urgent|asap|important|rappel|relance|deadline|demain|aujourd'hui|facteur|impayé/i;
+  const priority = urgentKeywords.test(subject + snippet) ? 'urgent' : 'normal';
 
   return {
     id: msg.id,
-    account: detectedAct,
+    account: accountKey,
     from: fromName,
     fromEmail,
     subject,
@@ -1209,7 +1278,6 @@ function parseGmailMessage(msg, accountKey) {
     dateLabel: formatEmailDate(date),
     isUnread,
     priority,
-    labelIds,
     body: null // loaded on demand
   };
 }
@@ -1293,15 +1361,8 @@ function checkConnectedAccounts() {
   Object.keys(state.tokens).forEach(key => {
     if (state.tokens[key]) {
       updateAccountStatus(key, true);
+      // Refresh emails on load
       fetchEmailsForAccount(key, state.tokens[key]);
-      fetchCalendarEvents(key, state.tokens[key]).then(evs => {
-        state.calEvents = state.calEvents.filter(e => e.account !== key).concat(evs);
-        renderCalendarEvents();
-      });
-      fetchDriveFiles(key, state.tokens[key]).then(files => {
-        state.driveFiles = state.driveFiles.filter(f => f.account !== key).concat(files);
-        renderDriveFiles();
-      });
     }
   });
   const anyConnected = Object.keys(state.tokens).length > 0;
@@ -1969,230 +2030,697 @@ function escHtml(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ════════════════════════════════════════════
-// GOOGLE CALENDAR API
-// ════════════════════════════════════════════
-async function fetchCalendarEvents(accountKey, token) {
-  if (!token) return [];
-  const now = new Date();
-  const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
-  const startOfDay = new Date(y, m, d).toISOString();
-  const endOfDay   = new Date(y, m, d + 1).toISOString();
-  try {
-    const resp = await fetch(
-      "https://www.googleapis.com/calendar/v3/calendars/primary/events?" +
-      "timeMin=" + encodeURIComponent(startOfDay) + "&timeMax=" + encodeURIComponent(endOfDay) +
-      "&singleEvents=true&orderBy=startTime&maxResults=15",
-      { headers: { Authorization: "Bearer " + token } }
-    );
-    if (!resp.ok) return [];
-    const data = await resp.json();
-    return (data.items || []).map(ev => ({
-      id: ev.id,
-      title: ev.summary || "(Sans titre)",
-      start: ev.start && (ev.start.dateTime || ev.start.date),
-      end:   ev.end   && (ev.end.dateTime   || ev.end.date),
-      allDay: ev.start && !ev.start.dateTime,
-      account: accountKey,
-      location: ev.location || "",
-    }));
-  } catch(e) { return []; }
+// ═══════════════════════════════════════════════════
+// AGENDA PAGE — CALENDAR VIEWS
+// ═══════════════════════════════════════════════════
+function setCalView(view, btn) {
+  state.calView = view;
+  document.querySelectorAll(".view-tab").forEach(function(b){ b.classList.remove("active"); });
+  if (btn) btn.classList.add("active");
+  var vt = document.getElementById("vt-" + view);
+  if (vt) vt.classList.add("active");
+  refreshAgendaPage();
 }
 
-function renderCalendarEvents() {
-  var el = document.getElementById("cal-events");
-  if (!el) return;
-  var events = state.calEvents || [];
-  var anyConnected = Object.keys(state.tokens).length > 0;
-  var calStatus = document.getElementById("status-int-calendar");
-  if (calStatus) {
-    if (events.length > 0) calStatus.innerHTML = '<span class="spill sp-ok">✓ ' + events.length + ' événement' + (events.length > 1 ? 's' : '') + " aujourd’hui</span>";
-    else if (anyConnected) calStatus.innerHTML = '<span class="spill sp-info">Aucun événement aujourd’hui</span>';
-    else calStatus.innerHTML = '<span class="spill sp-warn">Non connecté</span>';
+function agendaNav(dir) {
+  if (!state.calViewDate) state.calViewDate = new Date();
+  var d = new Date(state.calViewDate);
+  if (state.calView === "day")   d.setDate(d.getDate() + dir);
+  if (state.calView === "week")  d.setDate(d.getDate() + dir * 7);
+  if (state.calView === "month") d.setMonth(d.getMonth() + dir);
+  state.calViewDate = d;
+  refreshAgendaPage();
+}
+
+function agendaGoToday() {
+  state.calViewDate = new Date();
+  refreshAgendaPage();
+}
+
+function agendaDateLabel() {
+  var d = state.calViewDate || new Date();
+  var months = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+  var days = ["Dimanche","Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi"];
+  if (state.calView === "day") return days[d.getDay()] + " " + d.getDate() + " " + months[d.getMonth()] + " " + d.getFullYear();
+  if (state.calView === "week") {
+    var mon = new Date(d); mon.setDate(d.getDate() - ((d.getDay() + 6) % 7));
+    var sun = new Date(mon); sun.setDate(mon.getDate() + 6);
+    if (mon.getMonth() === sun.getMonth()) return mon.getDate() + " — " + sun.getDate() + " " + months[mon.getMonth()] + " " + mon.getFullYear();
+    return mon.getDate() + " " + months[mon.getMonth()].substring(0,3) + " — " + sun.getDate() + " " + months[sun.getMonth()].substring(0,3) + " " + sun.getFullYear();
   }
-  if (events.length === 0) {
-    el.innerHTML = anyConnected
-      ? '<div style="font-size:12px;color:var(--ink3);padding:12px 0;font-style:italic">Aucun événement aujourd\'hui</div>'
-      : '<div style="font-size:12px;color:var(--ink3);padding:12px 0;font-style:italic">Connectez vos comptes pour voir votre agenda</div>';
-    return;
-  }
-  var sorted = events.slice().sort(function(a, b) { return new Date(a.start) - new Date(b.start); });
-  el.innerHTML = sorted.map(function(ev) {
-    var acc = ACCOUNTS[ev.account];
-    var color = acc ? acc.color : "var(--ink3)";
-    var timeStr = ev.allDay ? "Toute la journée" : formatEventTime(ev.start);
-    var durStr = !ev.allDay && ev.end ? " · " + formatEventDuration(ev.start, ev.end) : "";
-    var locStr = ev.location ? " · " + escHtml(ev.location.substring(0, 25)) : "";
-    return '<div class="cal-ev"><div class="cal-time">' + timeStr + '</div><div class="cal-bar" style="background:' + color + '"></div><div class="cal-info"><div class="cal-title2">' + escHtml(ev.title) + '</div><div class="cal-desc2">' + escHtml(acc ? acc.label : ev.account) + durStr + locStr + '</div></div></div>';
-  }).join("");
+  return months[d.getMonth()] + " " + d.getFullYear();
 }
 
-function formatEventTime(dateStr) {
-  if (!dateStr) return "";
-  return new Date(dateStr).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
-}
-
-function formatEventDuration(startStr, endStr) {
-  var mins = Math.round((new Date(endStr) - new Date(startStr)) / 60000);
-  if (mins < 60) return mins + " min";
-  var h = Math.floor(mins / 60), m = mins % 60;
-  return m ? h + "h" + String(m).padStart(2, "0") : h + "h";
-}
-
-// ════════════════════════════════════════════
-// GOOGLE DRIVE API
-// ════════════════════════════════════════════
-async function fetchDriveFiles(accountKey, token) {
+async function fetchEventsForRange(token, start, end) {
   if (!token) return [];
   try {
     var resp = await fetch(
-      "https://www.googleapis.com/drive/v3/files?orderBy=modifiedTime+desc&pageSize=8&fields=files(id,name,mimeType,modifiedTime,webViewLink)",
+      "https://www.googleapis.com/calendar/v3/calendars/primary/events?" +
+      "timeMin=" + encodeURIComponent(start.toISOString()) +
+      "&timeMax=" + encodeURIComponent(end.toISOString()) +
+      "&singleEvents=true&orderBy=startTime&maxResults=50",
       { headers: { Authorization: "Bearer " + token } }
     );
     if (!resp.ok) return [];
     var data = await resp.json();
-    return (data.files || []).map(function(f) {
-      return { id: f.id, name: f.name, mimeType: f.mimeType, modifiedTime: f.modifiedTime, url: f.webViewLink, account: accountKey };
-    });
+    return data.items || [];
   } catch(e) { return []; }
 }
 
-var MIME_ICONS = {
-  "application/vnd.google-apps.document": "📄",
-  "application/vnd.google-apps.spreadsheet": "📊",
-  "application/vnd.google-apps.presentation": "🎬",
-  "application/vnd.google-apps.folder": "📁",
-  "application/pdf": "📕",
+async function refreshAgendaPage() {
+  if (!state.calViewDate) state.calViewDate = new Date();
+  var d = state.calViewDate;
+  var lbl = document.getElementById("agenda-date-label");
+  if (lbl) lbl.textContent = agendaDateLabel();
+  var sub = document.getElementById("agenda-sub");
+  var content = document.getElementById("agenda-content");
+  if (!content) return;
+
+  // Update view tabs
+  ["day","week","month"].forEach(function(v) {
+    var el = document.getElementById("vt-" + v);
+    if (el) el.classList.toggle("active", state.calView === v);
+  });
+
+  var tokens = Object.values(state.tokens).filter(Boolean);
+  if (tokens.length === 0) {
+    content.innerHTML = '<div style="padding:40px;text-align:center;color:var(--ink3);font-size:13px"><div style="font-size:28px;margin-bottom:10px">📅</div>Connectez un compte Gmail pour voir vos \u00e9v\u00e9nements</div>';
+    return;
+  }
+
+  content.innerHTML = '<div style="padding:20px;text-align:center;color:var(--ink3);font-size:12px">Chargement...</div>';
+
+  // Compute date range
+  var start, end;
+  if (state.calView === "day") {
+    start = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    end   = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
+  } else if (state.calView === "week") {
+    var dow = (d.getDay() + 6) % 7; // Monday = 0
+    start = new Date(d.getFullYear(), d.getMonth(), d.getDate() - dow);
+    end   = new Date(start); end.setDate(start.getDate() + 7);
+  } else {
+    start = new Date(d.getFullYear(), d.getMonth(), 1);
+    end   = new Date(d.getFullYear(), d.getMonth() + 1, 1);
+  }
+
+  // Fetch from all connected accounts
+  var allEvents = [];
+  var keys = Object.keys(state.tokens);
+  for (var ki = 0; ki < keys.length; ki++) {
+    var key = keys[ki];
+    if (state.tokens[key]) {
+      var evs = await fetchEventsForRange(state.tokens[key], start, end);
+      evs.forEach(function(ev) { ev._account = key; });
+      allEvents = allEvents.concat(evs);
+    }
+  }
+
+  allEvents.sort(function(a, b) {
+    var as = (a.start && (a.start.dateTime || a.start.date)) || "";
+    var bs = (b.start && (b.start.dateTime || b.start.date)) || "";
+    return as.localeCompare(bs);
+  });
+
+  if (sub) sub.textContent = allEvents.length + " événement" + (allEvents.length !== 1 ? "s" : "") + " — " + agendaDateLabel();
+
+  // Render birthdays for this range
+  renderAgendaBirthdays(start, end);
+
+  if (state.calView === "day") renderDayView(allEvents, start, content);
+  else if (state.calView === "week") renderWeekView(allEvents, start, content);
+  else renderMonthView(allEvents, d, content);
+}
+
+function renderDayView(events, date, container) {
+  if (events.length === 0) {
+    container.innerHTML = '<div style="padding:40px;text-align:center;color:var(--ink3);font-size:13px">Aucun \u00e9v\u00e9nement ce jour</div>';
+    return;
+  }
+  container.innerHTML = events.map(function(ev) {
+    var acc = ACCOUNTS[ev._account];
+    var color = acc ? acc.color : "var(--ink3)";
+    var allDay = ev.start && !ev.start.dateTime;
+    var timeStr = allDay ? "Toute la journée" : (ev.start ? formatEventTime(ev.start.dateTime) : "");
+    var endStr = (!allDay && ev.end && ev.end.dateTime) ? " – " + formatEventTime(ev.end.dateTime) : "";
+    var dur = (!allDay && ev.start && ev.end) ? " · " + formatEventDuration(ev.start.dateTime, ev.end.dateTime) : "";
+    var loc = ev.location ? " · " + escHtml(ev.location.substring(0, 40)) : "";
+    return '<div class="ag-day-ev">' +
+      '<div class="ag-ev-time">' + timeStr + endStr + "</div>" +
+      '<div class="ag-ev-bar" style="background:' + color + '"></div>' +
+      '<div class="ag-ev-body">' +
+      '<div class="ag-ev-title">' + escHtml(ev.summary || "(Sans titre)") + "</div>" +
+      '<div class="ag-ev-meta">' + escHtml(acc ? acc.label : (ev._account || "")) + dur + loc + "</div>" +
+      "</div></div>";
+  }).join("");
+}
+
+function renderWeekView(events, weekStart, container) {
+  var today = new Date();
+  var days = ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+  var html = '<div class="wk-grid">';
+  for (var i = 0; i < 7; i++) {
+    var day = new Date(weekStart); day.setDate(weekStart.getDate() + i);
+    var isToday = day.toDateString() === today.toDateString();
+    var dayStr = day.toISOString().split("T")[0];
+    var dayEvs = events.filter(function(ev) {
+      var evDate = ev.start && (ev.start.dateTime || ev.start.date);
+      return evDate && evDate.startsWith(dayStr);
+    });
+    html += '<div class="wk-col' + (isToday ? " today-col" : "") + '">';
+    html += '<div class="wk-col-header' + (isToday ? " today-h" : "") + '">' + days[i] + '<span class="wk-date-num">' + day.getDate() + "</span></div>";
+    dayEvs.slice(0, 4).forEach(function(ev) {
+      var acc = ACCOUNTS[ev._account];
+      var color = acc ? acc.color.replace("var(--", "").replace(")", "") : "";
+      var bgColor = acc ? acc.color : "#999";
+      html += '<div class="wk-ev" style="background:' + bgColor + '" title="' + escHtml(ev.summary || "") + '">' + escHtml((ev.summary || "(Sans titre)").substring(0, 20)) + "</div>";
+    });
+    if (dayEvs.length > 4) html += '<div style="font-size:10px;color:var(--ink3);padding:2px 3px">+' + (dayEvs.length - 4) + " autres</div>";
+    html += "</div>";
+  }
+  html += "</div>";
+  container.innerHTML = html;
+}
+
+function renderMonthView(events, refDate, container) {
+  var today = new Date();
+  var months = ["Jan","Fév","Mars","Avr","Mai","Juin","Juil","Août","Sep","Oct","Nov","Déc"];
+  var year = refDate.getFullYear(), month = refDate.getMonth();
+  var firstDay = new Date(year, month, 1);
+  var lastDay  = new Date(year, month + 1, 0);
+  var startDow = (firstDay.getDay() + 6) % 7; // Mon=0
+  var days = ["Lun","Mar","Mer","Jeu","Ven","Sam","Dim"];
+  var html = '<div class="mo-grid-hdr">' + days.map(function(d){ return '<div class="mo-th">' + d + "</div>"; }).join("") + "</div>";
+  html += '<div class="mo-grid">';
+  var cells = startDow + lastDay.getDate();
+  var totalCells = Math.ceil(cells / 7) * 7;
+  for (var i = 0; i < totalCells; i++) {
+    var dayNum = i - startDow + 1;
+    var isCurrentMonth = dayNum >= 1 && dayNum <= lastDay.getDate();
+    var dayDate = new Date(year, month, dayNum);
+    var isToday = dayDate.toDateString() === today.toDateString();
+    var dayStr = dayDate.toISOString().split("T")[0];
+    var dayEvs = isCurrentMonth ? events.filter(function(ev) {
+      var evDate = ev.start && (ev.start.dateTime || ev.start.date);
+      return evDate && evDate.startsWith(dayStr);
+    }) : [];
+    html += '<div class="mo-day" onclick="agendaClickDay(\'' + dayStr + '\')">';
+    if (isCurrentMonth) {
+      html += '<div class="mo-day-num' + (isToday ? " today" : "") + '">' + dayNum + "</div>";
+      dayEvs.slice(0, 3).forEach(function(ev) {
+        var acc = ACCOUNTS[ev._account];
+        var bg = acc ? acc.color : "#999";
+        html += '<div class="mo-ev-dot" style="background:' + bg + '">' + escHtml((ev.summary || "").substring(0, 18)) + "</div>";
+      });
+      if (dayEvs.length > 3) html += '<div class="mo-more">+' + (dayEvs.length - 3) + "</div>";
+    } else {
+      html += '<div class="mo-day-num other">' + (dayNum < 1 ? new Date(year, month, dayNum).getDate() : dayNum) + "</div>";
+    }
+    html += "</div>";
+  }
+  html += "</div>";
+  container.innerHTML = html;
+}
+
+function agendaClickDay(dateStr) {
+  state.calView = "day";
+  state.calViewDate = new Date(dateStr + "T12:00:00");
+  refreshAgendaPage();
+}
+
+function openCreateEventModal() {
+  var today = new Date().toISOString().split("T")[0];
+  var evDate = document.getElementById("ev-date");
+  if (evDate && !evDate.value) evDate.value = today;
+  openModal("event-modal");
+}
+
+// ═══════════════════════════════════════════════════════
+// CALENDAR WRITE — CREATE EVENT
+// ═══════════════════════════════════════════════════════
+async function createEventFromModal() {
+  var title   = document.getElementById("ev-title")   ? document.getElementById("ev-title").value.trim()    : "";
+  var date    = document.getElementById("ev-date")    ? document.getElementById("ev-date").value             : "";
+  var time    = document.getElementById("ev-time")    ? document.getElementById("ev-time").value             : "";
+  var endTime = document.getElementById("ev-end-time")? document.getElementById("ev-end-time").value         : "";
+  var desc    = document.getElementById("ev-desc")    ? document.getElementById("ev-desc").value             : "";
+  var account = document.getElementById("ev-account") ? document.getElementById("ev-account").value          : Object.keys(state.tokens)[0] || "am";
+  var statusEl = document.getElementById("ev-save-status");
+  if (!title || !date) { if (statusEl) statusEl.textContent = "Titre et date requis."; return; }
+  var token = state.tokens[account];
+  if (!token) { if (statusEl) statusEl.textContent = "Compte " + account + " non connecté."; return; }
+  if (statusEl) statusEl.textContent = "Enregistrement en cours...";
+  var body = { summary: title, description: desc };
+  if (time) {
+    body.start = { dateTime: date + "T" + time + ":00", timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone };
+    var et = endTime || (parseInt(time.split(":")[0]) + 1).toString().padStart(2,"0") + ":" + time.split(":")[1];
+    body.end   = { dateTime: date + "T" + et + ":00", timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone };
+  } else {
+    body.start = { date: date };
+    body.end   = { date: date };
+  }
+  try {
+    var resp = await fetch("https://www.googleapis.com/calendar/v3/calendars/primary/events", {
+      method: "POST",
+      headers: { Authorization: "Bearer " + token, "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    });
+    if (resp.ok) {
+      if (statusEl) statusEl.innerHTML = '<span style="color:var(--sage)">✓ \u00c9v\u00e9nement ajout\u00e9 dans Google Calendar !</span>';
+      // Add to local state too
+      state.calEvents.push({ id: "local_" + Date.now(), title: title, start: date + (time ? "T" + time + ":00" : ""), allDay: !time, account: account });
+      renderCalendarEvents();
+      // Refresh agenda if open
+      var agendaPage = document.getElementById("page-agenda");
+      if (agendaPage && agendaPage.classList.contains("active")) refreshAgendaPage();
+      setTimeout(function(){ closeModal("event-modal"); if (statusEl) statusEl.textContent = ""; }, 1500);
+    } else {
+      var err = await resp.json();
+      if (statusEl) statusEl.textContent = "Erreur : " + (err.error && err.error.message || resp.status);
+    }
+  } catch(e) {
+    if (statusEl) statusEl.textContent = "Erreur réseau.";
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// BIRTHDAYS — Google People API
+// ═══════════════════════════════════════════════════════
+async function fetchBirthdays(token) {
+  if (!token) return;
+  try {
+    var resp = await fetch(
+      "https://people.googleapis.com/v1/people/me/connections?personFields=names,birthdays&pageSize=500&sortOrder=FIRST_NAME_ASCENDING",
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    if (!resp.ok) return;
+    var data = await resp.json();
+    var contacts = (data.connections || []).filter(function(p) {
+      return p.birthdays && p.birthdays.length > 0 && p.names && p.names.length > 0;
+    }).map(function(p) {
+      var bday = p.birthdays[0].date;
+      return { name: p.names[0].displayName || p.names[0].givenName || "?", month: bday.month, day: bday.day };
+    }).filter(function(c){ return c.month && c.day; });
+    // Merge without duplicates
+    contacts.forEach(function(nc) {
+      if (!state.contacts.some(function(ec){ return ec.name === nc.name && ec.month === nc.month; })) {
+        state.contacts.push(nc);
+      }
+    });
+    saveState();
+    renderBirthdaySection();
+  } catch(e) {}
+}
+
+function daysUntilBirthday(month, day) {
+  var today = new Date();
+  var y = today.getFullYear();
+  var bday = new Date(y, month - 1, day);
+  if (bday < today) bday = new Date(y + 1, month - 1, day);
+  return Math.ceil((bday - today) / 86400000);
+}
+
+function renderBirthdaySection() {
+  var contacts = state.contacts || [];
+  if (contacts.length === 0) return;
+  var today = new Date();
+  var sorted = contacts.map(function(c) {
+    return { name: c.name, month: c.month, day: c.day, daysLeft: daysUntilBirthday(c.month, c.day) };
+  }).sort(function(a, b) { return a.daysLeft - b.daysLeft; }).filter(function(c){ return c.daysLeft <= 30; });
+
+  // Today card
+  var card = document.getElementById("today-birthdays-card");
+  var list  = document.getElementById("today-birthdays-list");
+  if (card && list && sorted.length > 0) {
+    card.style.display = "";
+    list.innerHTML = sorted.slice(0, 5).map(function(c) {
+      var isToday = c.daysLeft === 0;
+      return '<div class="bday-item">' +
+        '<span style="font-size:16px">' + (isToday ? "🎂" : "🎈") + "</span>" +
+        '<div style="flex:1"><div style="font-size:12.5px;font-weight:500">' + escHtml(c.name) + "</div>" +
+        '<div style="font-size:11px;color:var(--ink3)">' + (isToday ? "Aujourd'hui !" : "Dans " + c.daysLeft + " jour" + (c.daysLeft > 1 ? "s" : "")) + " — " + c.day + "/" + c.month + "</div></div>" +
+        (isToday ? '<button class="btn-ghost btn-sm" style="font-size:10px" onclick="prefill(\'R\u00e9dige un message d\\\'anniversaire pour ' + escHtml(c.name) + '\')">Ecrire &rarr;</button>' : "") +
+        "</div>";
+    }).join("");
+  }
+}
+
+function renderAgendaBirthdays(start, end) {
+  var container = document.getElementById("agenda-birthdays-row");
+  if (!container) return;
+  var contacts = state.contacts || [];
+  var upcoming = contacts.filter(function(c) {
+    var bday = new Date(start.getFullYear(), c.month - 1, c.day);
+    if (bday < start) bday = new Date(start.getFullYear() + 1, c.month - 1, c.day);
+    return bday >= start && bday <= end;
+  }).map(function(c) {
+    return { name: c.name, month: c.month, day: c.day, daysLeft: daysUntilBirthday(c.month, c.day) };
+  });
+  if (upcoming.length === 0) { container.innerHTML = ""; return; }
+  container.innerHTML = '<div class="bday-card"><div style="font-size:11px;font-weight:700;color:var(--terra);margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em">\uD83C\uDF82 Anniversaires dans cette p\u00e9riode</div>' +
+    upcoming.map(function(c) {
+      return '<div class="bday-today-item"><span style="font-size:14px">' + (c.daysLeft === 0 ? "🎂" : "🎈") + '</span><span style="font-size:12.5px;font-weight:500;margin-left:6px">' + escHtml(c.name) + '</span><span style="font-size:11px;color:var(--ink3);margin-left:8px">' + (c.daysLeft === 0 ? "Aujourd'hui !" : "dans " + c.daysLeft + "j") + " — " + c.day + "/" + c.month + "</span></div>";
+    }).join("") + "</div>";
+}
+
+// ═══════════════════════════════════════════════════════
+// TWITCH INTEGRATION
+// ═══════════════════════════════════════════════════════
+function saveTwitchCredentials() {
+  var clientId = document.getElementById("twitch-client-id") ? document.getElementById("twitch-client-id").value.trim() : "";
+  var token    = document.getElementById("twitch-token-input") ? document.getElementById("twitch-token-input").value.trim() : "";
+  token = token.replace(/^oauth:/i, "");
+  if (!clientId || !token) { alert("Veuillez remplir les deux champs."); return; }
+  state.twitchClientId = clientId;
+  state.twitchToken = token;
+  saveState();
+  closeModal("twitch-modal");
+  fetchTwitchStats();
+  var intCard = document.getElementById("int-card-twitch");
+  if (intCard) intCard.classList.add("connected");
+  var btn = document.getElementById("btn-int-twitch");
+  if (btn) btn.textContent = "↺ Reconnecter";
+  var st = document.getElementById("status-int-twitch");
+  if (st) st.innerHTML = '<span class="spill sp-ok">\u2713 Token enregistr\u00e9</span>';
+}
+
+async function fetchTwitchStats() {
+  if (!state.twitchToken || !state.twitchClientId) return;
+  var token = state.twitchToken, clientId = state.twitchClientId;
+  try {
+    // Get user info
+    var userResp = await fetch("https://api.twitch.tv/helix/users?login=bobulfilas91", {
+      headers: { "Client-ID": clientId, "Authorization": "Bearer " + token }
+    });
+    if (!userResp.ok) { console.warn("Twitch auth failed:", userResp.status); return; }
+    var userData = await userResp.json();
+    var user = userData.data && userData.data[0];
+    if (!user) return;
+    var userId = user.id;
+    // Get live stream
+    var streamResp = await fetch("https://api.twitch.tv/helix/streams?user_id=" + userId, {
+      headers: { "Client-ID": clientId, "Authorization": "Bearer " + token }
+    });
+    var streamData = streamResp.ok ? await streamResp.json() : { data: [] };
+    var stream = streamData.data && streamData.data[0];
+    // Get followers
+    var followResp = await fetch("https://api.twitch.tv/helix/channels/followers?broadcaster_id=" + userId, {
+      headers: { "Client-ID": clientId, "Authorization": "Bearer " + token }
+    });
+    var followData = followResp.ok ? await followResp.json() : {};
+    state.twitchStats = {
+      login: user.login,
+      displayName: user.display_name,
+      profileImg: user.profile_image_url,
+      totalViews: user.view_count,
+      followers: followData.total || 0,
+      isLive: !!(stream),
+      liveTitle: stream ? stream.title : null,
+      liveViewers: stream ? stream.viewer_count : 0,
+      liveGame: stream ? stream.game_name : null,
+    };
+    renderTwitchCard();
+  } catch(e) { console.warn("Twitch fetch error:", e); }
+}
+
+function renderTwitchCard() {
+  var card = document.getElementById("today-twitch-card");
+  var content = document.getElementById("twitch-stats-content");
+  var badge = document.getElementById("twitch-live-badge");
+  var intStatus = document.getElementById("status-int-twitch");
+
+  if (!state.twitchToken) {
+    if (card) card.style.display = "none";
+    if (intStatus) intStatus.innerHTML = '<span class="spill sp-warn">Non connect\u00e9</span>';
+    return;
+  }
+
+  if (card) card.style.display = "";
+  var stats = state.twitchStats;
+  if (!stats) {
+    if (content) content.innerHTML = '<div style="font-size:12px;color:var(--ink3)">Chargement...</div>';
+    if (intStatus) intStatus.innerHTML = '<span class="spill sp-info">Chargement...</span>';
+    return;
+  }
+
+  if (badge) {
+    badge.innerHTML = stats.isLive
+      ? '<span class="tw-live"><span class="tw-live-dot"></span>LIVE</span>'
+      : '<span style="font-size:10px;color:var(--ink3);">Hors ligne</span>';
+  }
+
+  var html = "";
+  if (stats.isLive) {
+    html += '<div style="font-size:12px;color:var(--ink2);margin-bottom:6px">' + escHtml(stats.liveTitle || "") + "</div>";
+    html += '<div style="font-size:11px;color:var(--ink3);margin-bottom:8px">' + escHtml(stats.liveGame || "") + " · " + (stats.liveViewers || 0).toLocaleString("fr-FR") + " spectateurs</div>";
+  }
+  html += '<div class="tw-grid">';
+  html += '<div class="tw-stat"><div class="tw-stat-val">' + formatTwitchNum(stats.followers) + '</div><div class="tw-stat-label">Abonn\u00e9s</div></div>';
+  html += '<div class="tw-stat"><div class="tw-stat-val">' + formatTwitchNum(stats.totalViews) + '</div><div class="tw-stat-label">Vues totales</div></div>';
+  html += '<div class="tw-stat"><div class="tw-stat-val">' + (stats.isLive ? "🟢" : "⚫") + '</div><div class="tw-stat-label">' + (stats.isLive ? "En direct" : "Hors ligne") + "</div></div>";
+  html += "</div>";
+  html += '<a href="https://twitch.tv/bobulfilas91" target="_blank" style="display:inline-block;margin-top:8px;font-size:11px;color:var(--ink3);text-decoration:underline">Voir la cha\u00eene \u2192</a>';
+
+  if (content) content.innerHTML = html;
+  if (intStatus) intStatus.innerHTML = '<span class="spill sp-ok">\u2713 ' + (stats.isLive ? "En direct" : "Hors ligne") + " · " + formatTwitchNum(stats.followers) + " abonnés</span>";
+}
+
+function formatTwitchNum(n) {
+  if (!n) return "0";
+  if (n >= 1000000) return (n/1000000).toFixed(1).replace(".0","") + "M";
+  if (n >= 1000) return (n/1000).toFixed(1).replace(".0","") + "k";
+  return n.toString();
+}
+
+// ═══════════════════════════════════════════════════════
+// NOTION INTEGRATION
+// ═══════════════════════════════════════════════════════
+function saveNotionConfig() {
+  state.notionTokens = {
+    general: document.getElementById("notion-token-general") ? document.getElementById("notion-token-general").value.trim() : "",
+    urlAm:   document.getElementById("notion-url-am")  ? document.getElementById("notion-url-am").value.trim()  : "",
+    urlYm:   document.getElementById("notion-url-ym")  ? document.getElementById("notion-url-ym").value.trim()  : "",
+    urlJde:  document.getElementById("notion-url-jde") ? document.getElementById("notion-url-jde").value.trim() : "",
+    urlBob:  document.getElementById("notion-url-bob") ? document.getElementById("notion-url-bob").value.trim() : "",
+  };
+  saveState();
+  closeModal("notion-modal");
+  renderNotionLinks();
+  var intCard = document.getElementById("int-card-notion");
+  if (intCard) intCard.classList.add("connected");
+  var st = document.getElementById("status-int-notion");
+  if (st) st.innerHTML = '<span class="spill sp-ok">\u2713 URLs configur\u00e9es</span>';
+}
+
+function renderNotionLinks() {
+  var tokens = state.notionTokens || {};
+  var links = [
+    { key: "urlAm",  label: "Attard MM",  act: "am"  },
+    { key: "urlYm",  label: "YM BOOST",   act: "ym"  },
+    { key: "urlJde", label: "JDE Agency", act: "jde" },
+    { key: "urlBob", label: "Bobulfilas", act: "bob" },
+  ];
+  // Could render Notion quick-links in a future section
+  if (tokens.general || links.some(function(l){ return tokens[l.key]; })) {
+    var st = document.getElementById("status-int-notion");
+    if (st) st.innerHTML = '<span class="spill sp-ok">\u2713 Notion configur\u00e9</span>';
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SUMUP INTEGRATION
+// ═══════════════════════════════════════════════════════
+function saveSumupConfig() {
+  state.sumupToken = document.getElementById("sumup-token-input") ? document.getElementById("sumup-token-input").value.trim() : "";
+  saveState();
+  closeModal("sumup-modal");
+  renderSumupStatus();
+  var intCard = document.getElementById("int-card-sumup");
+  if (intCard) intCard.classList.add("connected");
+}
+
+function renderSumupStatus() {
+  var st = document.getElementById("status-int-sumup");
+  if (!st) return;
+  if (state.sumupToken) {
+    st.innerHTML = '<span class="spill sp-ok">\u2713 Token enregistr\u00e9</span><br><a href="https://me.sumup.com/" target="_blank" style="font-size:11px;color:var(--ink3);text-decoration:underline">Ouvrir SumUp &rarr;</a>';
+  } else {
+    st.innerHTML = '<span class="spill sp-warn">Non configur\u00e9</span>';
+  }
+}
+
+// Make token
+function saveMakeConfig() {
+  var token = document.getElementById("make-token-input") ? document.getElementById("make-token-input").value.trim() : "";
+  if (token) {
+    state.notionTokens = state.notionTokens || {};
+    state.notionTokens.make = token;
+    saveState();
+    var st = document.getElementById("status-int-make");
+    if (st) st.innerHTML = '<span class="spill sp-ok">\u2713 Token Make enregistr\u00e9</span>';
+  }
+  closeModal("make-modal");
+}
+
+// ═══════════════════════════════════════════════════════
+// ARIA AGENT — action detection + execution
+// ═══════════════════════════════════════════════════════
+function detectActionIntent(text) {
+  var t = text.toLowerCase();
+  // Create task
+  var taskRx = /(?:ajoute?|cr[eé]er?|nouvelle?)s+(?:une?s+)?(?:t[aâ]che|todo|task)s*[:-]?s*(.{3,})/i;
+  var tm = text.match(taskRx);
+  if (tm) return { type: "create_task", text: tm[1].trim() };
+
+  // Create event / block slot
+  var evRx = /(?:bloqu?e?r?|planifie?|r[eé]serve?r?|programme?|cr[eé]er? (?:un|une)?s*(?:cr[eé]neau|[eé]v[eé]nement|rdv|r[eé]union))s*[:-]?s*(.{3,})/i;
+  var em = text.match(evRx);
+  if (em) return { type: "create_event", text: em[1].trim() };
+
+  // View calendar
+  if (t.match(/montre?|voir|affiche?|ouvre?/) && t.match(/semaine|mois|agenda|calendrier|[eé]v[eé]nement/)) {
+    return { type: "view_agenda", view: t.includes("mois") ? "month" : "week" };
+  }
+
+  // Check birthdays
+  if (t.match(/anniversaire|birthday|f[eê]te/)) return { type: "birthdays" };
+
+  // Rest / break
+  if (t.match(/repos|pause|reposer|break|souffl/) && t.length < 60) return { type: "rest" };
+
+  return null;
+}
+
+function buildActionPreview(intent) {
+  if (intent.type === "create_task") {
+    return '<div class="action-preview"><div class="ap-label">\u2295 Action d\u00e9tect\u00e9e \u2014 Cr\u00e9er une t\u00e2che</div>' +
+      '<div style="font-size:13px;color:var(--ink)">' + escHtml(intent.text) + "</div>" +
+      '<div class="ap-confirm">' +
+      '<button class="btn-primary btn-sm" onclick="executeAriaAction(' + JSON.stringify(intent).replace(/</g,"\u003c") + ')">Confirmer</button>' +
+      '<button class="btn-ghost btn-sm" onclick="this.closest(\'.msg\').remove()">Annuler</button>' +
+      "</div></div>" +
+      '<p style="font-size:12px;color:var(--ink2);margin-top:6px">Cliquez Confirmer pour ajouter cette t\u00e2che \u00e0 votre liste.</p>';
+  }
+  if (intent.type === "create_event") {
+    return '<div class="action-preview"><div class="ap-label">\uD83D\uDCC5 Action d\u00e9tect\u00e9e \u2014 Cr\u00e9er un \u00e9v\u00e9nement</div>' +
+      '<div style="font-size:13px;color:var(--ink)">' + escHtml(intent.text) + "</div>" +
+      '<div class="ap-confirm">' +
+      '<button class="btn-primary btn-sm" onclick="executeAriaAction(' + JSON.stringify(intent).replace(/</g,"\u003c") + ')">Confirmer</button>' +
+      '<button class="btn-ghost btn-sm" onclick="this.closest(\'.msg\').remove()">Annuler</button>' +
+      "</div></div>" +
+      '<p style="font-size:12px;color:var(--ink2);margin-top:6px">Cliquez Confirmer pour ouvrir le formulaire de cr\u00e9ation.</p>';
+  }
+  if (intent.type === "view_agenda") {
+    return "<p>Je vous montre votre agenda — <strong>ouverture en cours...</strong></p>";
+  }
+  if (intent.type === "birthdays") {
+    return ariaSuggests.birthdays();
+  }
+  if (intent.type === "rest") {
+    return ariaSuggests.rest();
+  }
+  return "<p>Je ne suis pas sûr de comprendre cette action. Reformulez-vous ou utilisez les raccourcis en bas.</p>";
+}
+
+function executeAriaAction(intent) {
+  if (typeof intent === "string") { try { intent = JSON.parse(intent); } catch(e) { return; } }
+  if (intent.type === "create_task") {
+    state.tasks.push({ id: Date.now(), text: intent.text, act: "", level: "important", done: false, date: new Date().toISOString() });
+    saveState();
+    renderTodos();
+    renderTaskByAct();
+    setDates();
+    var confirmHtml = "<p>✓ Tâche ajoutée : <strong>" + escHtml(intent.text) + '<\/strong><\/p><div class="msg-chips"><div class="chip" onclick="nav(\'today\', document.querySelector(\'.nb:nth-child(2)\'))">Voir dans Aujourd\'hui \u2192<\/div><\/div>';
+    appendAriaMsg(confirmHtml, false, "");
+  }
+  if (intent.type === "create_event") {
+    var evTitle = document.getElementById("ev-title");
+    if (evTitle) evTitle.value = intent.text;
+    openCreateEventModal();
+    appendAriaMsg("<p>✓ Formulaire ouvert pour : <strong>" + escHtml(intent.text) + "</strong></p>", false, "");
+  }
+  if (intent.type === "view_agenda") {
+    state.calView = intent.view || "week";
+    nav("agenda", document.getElementById("nb-agenda-btn"));
+    var agBtn = document.getElementById("nb-agenda-btn");
+    if (agBtn) { document.querySelectorAll(".nb").forEach(function(b){ b.classList.remove("active"); }); agBtn.classList.add("active"); }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+// SMART GREETING + SUGGESTIONS
+// ═══════════════════════════════════════════════════════
+function getTimeGreeting() {
+  var h = new Date().getHours();
+  if (h < 7)  return "Bonne nuit, Yaqine";
+  if (h < 12) return "Bonjour, Yaqine";
+  if (h < 18) return "Bon après-midi, Yaqine";
+  return "Bonsoir, Yaqine";
+}
+
+function updateSmartGreeting() {
+  var welcomeMsg = document.querySelector(".msg.aria .msg-bub p:first-child");
+  if (welcomeMsg) {
+    var h = new Date().getHours();
+    var dow = new Date().getDay();
+    var isWeekend = dow === 0 || dow === 6;
+    var greet = getTimeGreeting();
+    var extra = isWeekend ? " Profitez bien du weekend — " : " ";
+    welcomeMsg.innerHTML = greet + " ❖" + extra + "Je suis <strong>ARIA</strong>, votre secrétaire personnelle.";
+  }
+}
+
+// Extended ARIA suggestions
+ariaSuggests.birthdays = function() {
+  var contacts = state.contacts || [];
+  if (contacts.length === 0) return "<p>Je n'ai pas encore vos contacts. Connectez un compte Gmail pour que je récupère les anniversaires depuis Google Contacts.</p>";
+  var upcoming = contacts.map(function(c) {
+    return { name: c.name, daysLeft: daysUntilBirthday(c.month, c.day) };
+  }).filter(function(c){ return c.daysLeft <= 14; }).sort(function(a,b){ return a.daysLeft-b.daysLeft; });
+  if (upcoming.length === 0) return "<p>Aucun anniversaire dans les 14 prochains jours. 🎉</p>";
+  return "<p>Anniversaires dans les 14 prochains jours :</p><ul>" +
+    upcoming.map(function(c){ return "<li>" + (c.daysLeft === 0 ? "🎂 Aujourd'hui : " : "Dans " + c.daysLeft + "j : ") + "<strong>" + escHtml(c.name) + "</strong></li>"; }).join("") +
+    "</ul>";
 };
 
-function getMimeIcon(t) {
-  if (!t) return "📎";
-  if (t.startsWith("image/")) return "🖼";
-  if (t.startsWith("video/")) return "🎬";
-  return MIME_ICONS[t] || "📎";
-}
+ariaSuggests.twitch = function() {
+  var stats = state.twitchStats;
+  if (!state.twitchToken) return "<p>Connectez votre compte Twitch dans <strong>Intégrations</strong> pour voir les stats de Bobulfilas.</p>";
+  if (!stats) return "<p>Chargement des stats Twitch en cours...</p>";
+  return "<p>Bobulfilas sur Twitch :</p><ul>" +
+    "<li>Statut : <strong>" + (stats.isLive ? "🟢 EN DIRECT" : "Hors ligne") + "</strong></li>" +
+    "<li>Abonnés : <strong>" + formatTwitchNum(stats.followers) + "</strong></li>" +
+    "<li>Vues totales : <strong>" + formatTwitchNum(stats.totalViews) + "</strong></li>" +
+    (stats.isLive ? "<li>Titre : " + escHtml(stats.liveTitle || "") + "</li>" : "") +
+    "</ul>";
+};
 
-function renderDriveFiles() {
-  var el = document.getElementById("drive-files-list");
-  if (!el) return;
-  var files = state.driveFiles || [];
-  var anyConnected = Object.keys(state.tokens).length > 0;
-  var driveStatus = document.getElementById("status-int-drive");
-  if (driveStatus) {
-    if (files.length > 0) driveStatus.innerHTML = '<span class="spill sp-ok">✓ ' + files.length + ' fichier' + (files.length > 1 ? 's' : '') + ' chargé' + (files.length > 1 ? 's' : '') + '</span>';
-    else if (anyConnected) driveStatus.innerHTML = '<span class="spill sp-warn">Reconnectez pour activer Drive</span>';
-    else driveStatus.innerHTML = '<span class="spill sp-warn">Non connecté</span>';
-  }
-  var dsEl = document.getElementById("drive-status");
-  if (dsEl && files.length > 0) dsEl.textContent = files.length + " fichier" + (files.length > 1 ? "s" : "");
-  if (files.length === 0) {
-    el.innerHTML = anyConnected
-      ? '<div style="font-size:12px;color:var(--ink3);font-style:italic">Reconnectez vos comptes pour activer Drive</div>'
-      : '<div style="font-size:12px;color:var(--ink3);font-style:italic">Connectez un compte pour voir vos fichiers Drive</div>';
-    return;
-  }
-  var top = files.slice().sort(function(a,b){ return new Date(b.modifiedTime) - new Date(a.modifiedTime); }).slice(0, 8);
-  el.innerHTML = top.map(function(f) {
-    var acc = ACCOUNTS[f.account];
-    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="window.open(\'' + f.url + '\')">' +
-      '<span style="font-size:15px;flex-shrink:0">' + getMimeIcon(f.mimeType) + '</span>' +
-      '<div style="flex:1;min-width:0">' +
-      '<div style="font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHtml(f.name) + '</div>' +
-      '<div style="font-size:11px;color:var(--ink3)">' + escHtml(acc ? acc.label : f.account) + ' · ' + formatRelDate(f.modifiedTime) + '</div>' +
-      '</div></div>';
-  }).join("");
-}
+ariaSuggests.agenda = function() {
+  var events = state.calEvents || [];
+  if (events.length === 0) return "<p>Aucun événement chargé pour aujourd'hui. Connectez vos comptes Gmail pour voir votre agenda.</p>";
+  return "<p>Aujourd'hui vous avez " + events.length + " événement" + (events.length > 1 ? "s" : "") + ". <strong>Voulez-vous ouvrir l'agenda ?</strong></p>" +
+    '<div class="msg-chips"><div class="chip" onclick="nav(\'agenda\', document.getElementById(\'nb-agenda-btn\'))">📅 Ouvrir l\'agenda &rarr;<\/div><\/div>';
+};
 
-// ════════════════════════════════════════════
-// RECURRING TASKS
-// ════════════════════════════════════════════
-function toggleRecDays() {
-  var freq = document.getElementById("rec-freq") ? document.getElementById("rec-freq").value : "";
-  var row = document.getElementById("rec-days-row");
-  if (row) row.style.display = freq === "weekly" ? "" : "none";
-}
+ariaSuggests.rest = function() {
+  var h = new Date().getHours();
+  var taskCount = state.tasks.filter(function(t){ return !t.done; }).length;
+  if (h >= 18 || h < 7) return "<p>Bonne décision ! Après une journée de travail, le repos est productif. Vous avez encore " + taskCount + " tâche" + (taskCount > 1 ? "s" : "") + " — elles seront là demain. 🌙</p>";
+  if (h >= 12 && h < 14) return "<p>C'est l'heure du déjeuner ! 30 minutes loin des écrans rechargent véritablement. Votre backlog a " + taskCount + " tâche" + (taskCount > 1 ? "s" : "") + " — elles attendent. 🍱</p>";
+  return "<p>Une pause maintenant peut booster votre productivité. La technique Pomodoro : 25 min de travail intense, 5 min de pause. Essayez ! ⏱</p>";
+};
 
-function createRecurringTask() {
-  var textEl = document.getElementById("rec-text");
-  var text = textEl ? textEl.value.trim() : "";
-  var act   = document.getElementById("rec-act")   ? document.getElementById("rec-act").value   : "";
-  var level = document.getElementById("rec-level") ? document.getElementById("rec-level").value : "important";
-  var freq  = document.getElementById("rec-freq")  ? document.getElementById("rec-freq").value  : "daily";
-  if (!text) return;
-  var days = [];
-  if (freq === "weekly") {
-    days = Array.from(document.querySelectorAll(".rec-day:checked")).map(function(cb){ return parseInt(cb.value); });
-    if (days.length === 0) { alert("Sélectionnez au moins un jour."); return; }
-  }
-  var task = { id: Date.now(), text: text, act: act, level: level, freq: freq, days: days, lastGenerated: null };
-  state.recurringTasks.push(task);
-  saveState();
-  renderRecurringTaskList();
-  closeModal("recurring-modal");
-  if (textEl) textEl.value = "";
-  generateRecurringTasksForToday();
-  renderTodos();
-}
-
-function deleteRecurringTask(id) {
-  state.recurringTasks = state.recurringTasks.filter(function(t){ return t.id !== id; });
-  saveState();
-  renderRecurringTaskList();
-}
-
-function shouldRunToday(task) {
-  var today = new Date();
-  var todayStr = today.toISOString().split("T")[0];
-  if (task.lastGenerated === todayStr) return false;
-  var dow = today.getDay();
-  if (task.freq === "daily") return true;
-  if (task.freq === "weekdays") return dow >= 1 && dow <= 5;
-  if (task.freq === "weekly") return task.days.indexOf(dow) !== -1;
-  if (task.freq === "monthly") {
-    if (!task.lastGenerated) return true;
-    var last = new Date(task.lastGenerated);
-    return last.getMonth() !== today.getMonth() || last.getFullYear() !== today.getFullYear();
-  }
-  return false;
-}
-
-function generateRecurringTasksForToday() {
-  var todayStr = new Date().toISOString().split("T")[0];
-  var changed = false;
-  (state.recurringTasks || []).forEach(function(rec) {
-    if (shouldRunToday(rec)) {
-      var alreadyToday = state.tasks.some(function(t){ return t.recurringId === rec.id && (t.date || "").startsWith(todayStr); });
-      if (!alreadyToday) {
-        state.tasks.push({ id: Date.now() + Math.random(), text: rec.text, act: rec.act, level: rec.level, done: false, date: new Date().toISOString(), recurringId: rec.id });
-        rec.lastGenerated = todayStr;
-        changed = true;
-      }
-    }
-  });
-  if (changed) saveState();
-}
-
-function renderRecurringTaskList() {
-  var el = document.getElementById("recurring-task-list");
-  if (!el) return;
-  var tasks = state.recurringTasks || [];
-  if (tasks.length === 0) {
-    el.innerHTML = '<div style="font-size:12px;color:var(--ink3);font-style:italic;padding:6px 0">Aucune tâche récurrente configurée</div>';
-    return;
-  }
-  var freqLabels = { daily: "Quotidien", weekdays: "Lun–Ven", weekly: "Hebdo", monthly: "Mensuel" };
-  var dayNames = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
-  el.innerHTML = tasks.map(function(t) {
-    var acc = t.act ? ACCOUNTS[t.act] : null;
-    var fl = freqLabels[t.freq] || t.freq;
-    var dl = t.freq === "weekly" && t.days && t.days.length ? " · " + t.days.map(function(d){ return dayNames[d]; }).join(", ") : "";
-    var lvl = t.level === "urgent" ? "🔴" : t.level === "important" ? "🟡" : "🟢";
-    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">' +
-      '<div style="flex:1;min-width:0"><div style="font-size:12.5px;font-weight:500;color:var(--ink)">' + escHtml(t.text) + '</div>' +
-      '<div style="font-size:11px;color:var(--ink3)">' + fl + dl + ' · ' + (acc ? acc.label : 'Général') + ' · ' + lvl + '</div></div>' +
-      '<button onclick="deleteRecurringTask(' + t.id + ')" style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:12px;padding:0 4px" title="Supprimer">✕</button></div>';
-  }).join("");
-}
+ariaSuggests.finance = function() {
+  var income  = state.transactions.filter(function(t){ return t.type==="income";  }).reduce(function(s,t){ return s+t.amount; }, 0);
+  var expense = state.transactions.filter(function(t){ return t.type==="expense"; }).reduce(function(s,t){ return s+t.amount; }, 0);
+  var pending = state.invoices.filter(function(i){ return i.status==="pending"||i.status==="late"; }).reduce(function(s,i){ return s+i.amount; }, 0);
+  return "<p>Résumé financier :</p><ul>" +
+    "<li>CA ce mois : <strong>" + fmtEur(income) + "</strong></li>" +
+    "<li>Dépenses : <strong>" + fmtEur(expense) + "</strong></li>" +
+    "<li>En attente : <strong>" + fmtEur(pending) + "</strong></li>" +
+    "</ul>" +
+    (state.sumupToken ? '<p>SumUp configur\u00e9 &mdash; <a href="https://me.sumup.com/" target="_blank" style="color:var(--terra)">ouvrir le dashboard</a></p>' : "<p>Configurez SumUp dans Intégrations pour centraliser vos encaissements.</p>");
+};
 
 </script>
 </body>
