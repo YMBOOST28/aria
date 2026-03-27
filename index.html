@@ -1,0 +1,1871 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ARIA — Yaqine Merghem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;1,400&family=Geist:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#F7F4EF; --bg2:#EDE9E2; --bg3:#E4DDD3;
+  --surface:#FDFBF8; --border:rgba(60,50,40,0.10); --border2:rgba(60,50,40,0.18);
+  --ink:#1E1A16; --ink2:#6B6055; --ink3:#A89F94;
+  --terra:#C4714A; --terra2:#D9896A; --terra-bg:rgba(196,113,74,0.10);
+  --sage:#5A7A65; --sage-bg:rgba(90,122,101,0.10);
+  --caution:#A07030; --caution-bg:rgba(160,112,48,0.10);
+  --danger:#A03030; --danger-bg:rgba(160,48,48,0.10);
+  --am:#4A6070; --ym:#5A7A65; --jde:#7A5A7A; --bob:#C4714A;
+  --am-bg:rgba(74,96,112,0.10); --ym-bg:rgba(90,122,101,0.10);
+  --jde-bg:rgba(122,90,122,0.10); --bob-bg:rgba(196,113,74,0.10);
+  --font-serif:'Lora',Georgia,serif; --font-sans:'Geist',system-ui,sans-serif;
+  --r:12px; --rsm:8px; --rlg:18px;
+  --shadow:0 2px 16px rgba(30,26,22,0.07);
+  --shadow-lg:0 8px 40px rgba(30,26,22,0.12);
+  --t:0.18s ease;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-sans);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+::-webkit-scrollbar{width:4px} ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+a{color:inherit;text-decoration:none}
+
+/* ── LAYOUT ── */
+.shell{display:flex;height:100vh;overflow:hidden}
+
+/* ── SIDEBAR ── */
+.sidebar{width:258px;min-width:258px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;height:100vh}
+.sb-brand{padding:26px 22px 18px;border-bottom:1px solid var(--border)}
+.sb-brand-name{font-family:var(--font-serif);font-size:19px;letter-spacing:.08em;color:var(--ink)}
+.sb-brand-sub{font-size:11px;color:var(--ink3);margin-top:2px;letter-spacing:.04em}
+.sb-hello{padding:14px 22px 6px}
+.sb-day{font-size:10px;color:var(--ink3);letter-spacing:.05em;text-transform:uppercase}
+.sb-name{font-family:var(--font-serif);font-size:15px;color:var(--ink);margin-top:2px;font-style:italic}
+.sb-nav{flex:1;overflow-y:auto;padding:10px}
+.nav-sec{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding:10px 12px 5px;font-weight:500}
+.nb{width:100%;display:flex;align-items:center;gap:9px;padding:8px 12px;border-radius:var(--rsm);cursor:pointer;background:none;border:none;font-family:var(--font-sans);font-size:13px;color:var(--ink2);text-align:left;transition:all var(--t)}
+.nb:hover{background:var(--bg2);color:var(--ink)}
+.nb.active{background:var(--terra-bg);color:var(--terra);font-weight:500}
+.nb-icon{width:16px;height:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:13px;opacity:.75}
+.nb.active .nb-icon,.nb:hover .nb-icon{opacity:1}
+.nb-badge{margin-left:auto;background:var(--terra);color:white;font-size:10px;font-weight:500;padding:1px 6px;border-radius:20px}
+.nb-badge.neutral{background:var(--bg3);color:var(--ink3)}
+.nb-dot{width:7px;height:7px;border-radius:50%;margin-left:auto;flex-shrink:0}
+.dot-on{background:var(--sage)} .dot-off{background:var(--ink3)}
+.sb-foot{padding:12px;border-top:1px solid var(--border)}
+.user-chip{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:var(--rsm);cursor:pointer;transition:background var(--t)}
+.user-chip:hover{background:var(--bg2)}
+.user-av{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--terra),var(--jde));display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:white;flex-shrink:0}
+.user-name{font-size:13px;font-weight:500;color:var(--ink)}
+.user-sub{font-size:11px;color:var(--ink3)}
+
+/* ── MAIN ── */
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:56px;padding:0 26px;border-bottom:1px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.tb-title{font-family:var(--font-serif);font-size:16px;color:var(--ink)}
+.tb-right{display:flex;align-items:center;gap:8px}
+.btn-ghost{display:flex;align-items:center;gap:5px;padding:6px 13px;border-radius:var(--rsm);background:none;border:1px solid var(--border2);font-family:var(--font-sans);font-size:12.5px;color:var(--ink2);cursor:pointer;transition:all var(--t)}
+.btn-ghost:hover{background:var(--bg2);color:var(--ink)}
+.btn-primary{display:flex;align-items:center;gap:5px;padding:6px 14px;border-radius:var(--rsm);background:var(--terra);border:none;font-family:var(--font-sans);font-size:12.5px;font-weight:500;color:white;cursor:pointer;transition:all var(--t)}
+.btn-primary:hover{background:var(--terra2)}
+.btn-sm{padding:5px 11px;font-size:11.5px}
+.content{flex:1;overflow-y:auto;padding:26px}
+.page{display:none}
+.page.active{display:block;animation:fu .2s ease}
+@keyframes fu{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:18px 20px}
+.card:hover{border-color:var(--border2)}
+.card-title{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:12px}
+.section-title{font-family:var(--font-serif);font-size:21px;color:var(--ink);font-weight:500;font-style:italic}
+.section-sub{font-size:13px;color:var(--ink3);margin-top:3px}
+.section-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px}
+
+/* ── STATUS PILLS ── */
+.spill{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;letter-spacing:.03em}
+.sp-ok{background:var(--sage-bg);color:var(--sage)}
+.sp-warn{background:var(--caution-bg);color:var(--caution)}
+.sp-err{background:var(--danger-bg);color:var(--danger)}
+.sp-info{background:var(--am-bg);color:var(--am)}
+
+/* ── ACTIVITY TAGS ── */
+.atag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:4px;letter-spacing:.02em;white-space:nowrap}
+.t-am{background:var(--am-bg);color:var(--am)}
+.t-ym{background:var(--ym-bg);color:var(--ym)}
+.t-jde{background:var(--jde-bg);color:var(--jde)}
+.t-bob{background:var(--bob-bg);color:var(--bob)}
+.t-perso{background:var(--bg3);color:var(--ink3)}
+
+/* ── DIVIDER ── */
+.div{height:1px;background:var(--border);margin:14px 0}
+
+/* ─────────────────────────────────────
+   PAGE : ARIA (Today briefing + chat)
+───────────────────────────────────── */
+.aria-shell{display:flex;flex-direction:column;height:calc(100vh - 56px);max-width:700px;margin:0 auto}
+.aria-msgs{flex:1;overflow-y:auto;padding:22px 0 14px;display:flex;flex-direction:column;gap:18px}
+.msg{display:flex;gap:11px;align-items:flex-start}
+.msg.user{flex-direction:row-reverse}
+.msg-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;margin-top:2px}
+.msg.aria .msg-av{background:linear-gradient(135deg,var(--terra),#9B6E4A);color:white;font-family:var(--font-serif);font-style:italic}
+.msg.user .msg-av{background:var(--bg3);color:var(--ink2);font-weight:600;font-size:10px}
+.msg-bub{max-width:84%;padding:12px 15px;border-radius:var(--r);font-size:13.5px;line-height:1.65}
+.msg.aria .msg-bub{background:var(--surface);border:1px solid var(--border);color:var(--ink);border-radius:3px var(--r) var(--r) var(--r)}
+.msg.user .msg-bub{background:var(--terra);color:white;border-radius:var(--r) 3px var(--r) var(--r)}
+.msg-bub p{margin-bottom:7px} .msg-bub p:last-child{margin-bottom:0}
+.msg-bub strong{font-weight:600} .msg-bub ul{margin:5px 0 5px 15px} .msg-bub li{margin-bottom:3px}
+.msg-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chip{display:inline-flex;align-items:center;gap:4px;padding:5px 11px;border-radius:20px;background:var(--bg2);border:1px solid var(--border);font-size:12px;color:var(--ink2);cursor:pointer;transition:all var(--t);font-family:var(--font-sans)}
+.chip:hover{background:var(--terra-bg);border-color:var(--terra);color:var(--terra)}
+.chip.claude{background:rgba(196,113,74,0.12);border-color:rgba(196,113,74,0.3);color:var(--terra)}
+.chip.gpt{background:rgba(90,122,101,0.12);border-color:rgba(90,122,101,0.3);color:var(--sage)}
+
+/* briefing card */
+.briefing{background:linear-gradient(135deg,#1E1A16,#2D2318);border-radius:var(--rlg);padding:20px 22px;margin-top:10px;color:white}
+.br-date{font-size:10px;opacity:.45;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.br-title{font-family:var(--font-serif);font-size:16px;font-style:italic;opacity:.92;margin-bottom:12px;line-height:1.4}
+.br-items{display:flex;flex-direction:column;gap:7px}
+.br-item{display:flex;align-items:center;gap:9px;padding:8px 11px;background:rgba(255,255,255,0.065);border-radius:8px;font-size:12.5px;opacity:.9}
+.br-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.br-dot.u{background:#E07050} .br-dot.n{background:#C4A84A} .br-dot.l{background:#6A9070}
+.br-act{margin-left:auto;font-size:10px;opacity:.45;letter-spacing:.03em}
+.br-empty{text-align:center;padding:20px;opacity:.5;font-size:13px;font-style:italic}
+
+/* typing */
+.typing{display:flex;align-items:center;gap:4px;padding:9px 14px}
+.td{width:6px;height:6px;border-radius:50%;background:var(--terra);animation:tp 1.2s infinite;opacity:.4}
+.td:nth-child(2){animation-delay:.2s} .td:nth-child(3){animation-delay:.4s}
+@keyframes tp{0%,80%,100%{opacity:.4;transform:scale(1)}40%{opacity:1;transform:scale(1.2)}}
+
+/* input bar */
+.aria-bar{padding:14px 0 4px;border-top:1px solid var(--border)}
+.aria-wrap{display:flex;align-items:flex-end;gap:9px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);padding:9px 11px;transition:border-color var(--t)}
+.aria-wrap:focus-within{border-color:var(--terra)}
+.aria-ta{flex:1;background:none;border:none;outline:none;font-family:var(--font-sans);font-size:13.5px;color:var(--ink);resize:none;max-height:110px;min-height:22px;line-height:1.5}
+.aria-ta::placeholder{color:var(--ink3)}
+.aria-send{width:32px;height:32px;border-radius:7px;background:var(--terra);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all var(--t);color:white}
+.aria-send:hover{background:var(--terra2)}
+.hints{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.hint{padding:4px 10px;border-radius:20px;background:var(--bg2);border:1px solid var(--border);font-size:11.5px;color:var(--ink3);cursor:pointer;transition:all var(--t);font-family:var(--font-sans)}
+.hint:hover{background:var(--bg3);color:var(--ink2)}
+
+/* ─────────────────────────────────────
+   PAGE : EMAILS
+───────────────────────────────────── */
+.accounts-bar{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+.acc-btn{display:flex;align-items:center;gap:8px;padding:8px 14px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);cursor:pointer;transition:all var(--t);font-family:var(--font-sans);font-size:12.5px;color:var(--ink2)}
+.acc-btn:hover{border-color:var(--border2);background:var(--bg2)}
+.acc-btn.active{border-color:var(--border2);background:var(--bg2);color:var(--ink)}
+.acc-btn.connected{border-color:rgba(90,122,101,0.4)}
+.acc-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.acc-count{margin-left:auto;font-size:10px;font-weight:600;padding:1px 6px;border-radius:10px}
+.acc-unread{background:var(--terra);color:white}
+
+.email-layout{display:grid;grid-template-columns:300px 1fr;gap:14px;height:calc(100vh - 220px)}
+.email-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+.el-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.el-title{font-size:11px;font-weight:600;color:var(--ink2);letter-spacing:.04em}
+.el-items{flex:1;overflow-y:auto}
+.email-item{padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;transition:background var(--t)}
+.email-item:hover{background:var(--bg2)}
+.email-item.active{background:var(--terra-bg)}
+.email-item.unread .ei-subject{font-weight:600;color:var(--ink)}
+.ei-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px;gap:8px}
+.ei-from{font-size:12.5px;color:var(--ink);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1}
+.ei-time{font-size:10px;color:var(--ink3);flex-shrink:0}
+.ei-subject{font-size:12px;color:var(--ink2);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ei-preview{font-size:11px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ei-tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}
+.priority-flag{width:3px;height:100%;position:absolute;left:0;top:0;bottom:0;border-radius:2px 0 0 2px}
+
+.email-view{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+.ev-header{padding:18px 20px;border-bottom:1px solid var(--border)}
+.ev-subject{font-family:var(--font-serif);font-size:17px;color:var(--ink);margin-bottom:8px;line-height:1.3}
+.ev-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.ev-from{font-size:12.5px;color:var(--ink2)}
+.ev-time{font-size:11px;color:var(--ink3)}
+.ev-body{flex:1;overflow-y:auto;padding:20px;font-size:13.5px;color:var(--ink2);line-height:1.7}
+.ev-actions{padding:14px 20px;border-top:1px solid var(--border);display:flex;gap:8px;flex-wrap:wrap}
+
+/* loading skeleton */
+.skel{background:var(--bg3);border-radius:4px;animation:sk 1.4s ease infinite}
+@keyframes sk{0%,100%{opacity:.4}50%{opacity:.8}}
+
+/* connect banner */
+.connect-banner{display:flex;align-items:center;gap:12px;padding:14px 18px;background:var(--terra-bg);border:1px solid rgba(196,113,74,0.25);border-radius:var(--r);margin-bottom:16px}
+.cb-icon{font-size:18px;flex-shrink:0}
+.cb-text{flex:1;font-size:13px;color:var(--ink2)}
+.cb-text strong{color:var(--ink);font-weight:600}
+
+/* empty state */
+.empty{text-align:center;padding:40px 20px;color:var(--ink3)}
+.empty-icon{font-size:28px;margin-bottom:10px;opacity:.4}
+
+/* ─────────────────────────────────────
+   PAGE : TODAY
+───────────────────────────────────── */
+.today-grid{display:grid;grid-template-columns:1fr 300px;gap:18px;max-width:940px}
+.focus-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--rlg);padding:22px;position:relative;overflow:hidden;margin-bottom:16px}
+.focus-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--terra),var(--terra2))}
+.focus-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--terra);font-weight:600;margin-bottom:5px}
+.focus-headline{font-family:var(--font-serif);font-size:19px;color:var(--ink);margin-bottom:3px;line-height:1.3}
+.focus-sub{font-size:12.5px;color:var(--ink3);margin-bottom:18px}
+.todo-sec{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:8px}
+.todo-list{display:flex;flex-direction:column;gap:5px;margin-bottom:4px}
+.todo-item{display:flex;align-items:center;gap:10px;padding:9px 11px;background:var(--bg);border-radius:var(--rsm);border:1px solid transparent;cursor:pointer;transition:all var(--t)}
+.todo-item:hover{border-color:var(--border);background:var(--bg2)}
+.todo-chk{width:16px;height:16px;border:1.5px solid var(--border2);border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all var(--t);cursor:pointer;font-size:9px;color:white}
+.todo-chk:hover{border-color:var(--terra)}
+.todo-chk.done{background:var(--sage);border-color:var(--sage)}
+.todo-txt{flex:1;font-size:13px;color:var(--ink)}
+.todo-txt.done{text-decoration:line-through;color:var(--ink3)}
+.p-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.pu{background:#D05540} .ph2{background:var(--terra)} .pn{background:var(--caution)} .pl{background:var(--ink3)}
+.todo-add{display:flex;align-items:center;gap:9px;padding:7px 11px;border-radius:var(--rsm);border:1px dashed var(--border2);margin-top:7px;cursor:text;transition:all var(--t)}
+.todo-add:hover{border-color:var(--terra);background:var(--terra-bg)}
+.todo-add-in{flex:1;background:none;border:none;outline:none;font-family:var(--font-sans);font-size:13px;color:var(--ink)}
+.todo-add-in::placeholder{color:var(--ink3)}
+
+/* cal events */
+.cal-ev{display:flex;align-items:flex-start;gap:9px;padding:8px 0;border-bottom:1px solid var(--border)}
+.cal-ev:last-child{border-bottom:none;padding-bottom:0}
+.cal-time{font-size:11px;color:var(--ink3);min-width:36px;padding-top:1px;font-weight:500}
+.cal-bar{width:3px;align-self:stretch;border-radius:2px;flex-shrink:0;min-height:18px}
+.cal-info{flex:1}
+.cal-title2{font-size:13px;color:var(--ink);font-weight:500;margin-bottom:1px}
+.cal-desc2{font-size:11px;color:var(--ink3)}
+
+/* panel card */
+.pcrd{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px}
+.pcrd:last-child{margin-bottom:0}
+
+/* ─────────────────────────────────────
+   PAGE : NOTES
+───────────────────────────────────── */
+.notes-layout{display:grid;grid-template-columns:250px 1fr;gap:14px;height:calc(100vh - 130px)}
+.notes-list{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+.nl-header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.nl-items{flex:1;overflow-y:auto;padding:6px}
+.note-item{padding:10px 11px;border-radius:var(--rsm);cursor:pointer;transition:background var(--t);border:1px solid transparent;margin-bottom:2px}
+.note-item:hover{background:var(--bg2)}
+.note-item.active{background:var(--terra-bg);border-color:rgba(196,113,74,0.2)}
+.ni-title{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:2px}
+.ni-preview{font-size:11px;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ni-meta{display:flex;align-items:center;gap:5px;margin-top:4px}
+.ni-date{font-size:10px;color:var(--ink3)}
+
+.notes-editor{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);display:flex;flex-direction:column;overflow:hidden}
+.ne-toolbar{padding:11px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.ne-title{flex:1;background:none;border:none;outline:none;font-family:var(--font-serif);font-size:16px;color:var(--ink);font-weight:500}
+.ne-sel{background:var(--bg);border:1px solid var(--border);border-radius:var(--rsm);padding:6px 10px;font-family:var(--font-sans);font-size:12px;color:var(--ink2);outline:none;cursor:pointer}
+.ne-body{flex:1;padding:18px 22px;overflow-y:auto}
+.ne-ta{width:100%;min-height:280px;background:none;border:none;outline:none;font-family:var(--font-sans);font-size:13.5px;color:var(--ink);line-height:1.8;resize:none}
+.ne-ta::placeholder{color:var(--ink3)}
+.ne-foot{padding:11px 18px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.ne-ask-btn{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:var(--rsm);background:none;border:1px solid rgba(196,113,74,0.35);font-family:var(--font-sans);font-size:12px;color:var(--terra);cursor:pointer;transition:all var(--t)}
+.ne-ask-btn:hover{background:var(--terra-bg)}
+
+/* ─────────────────────────────────────
+   PAGE : INTÉGRATIONS
+───────────────────────────────────── */
+.int-sec-label{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin:18px 0 8px}
+.int-sec-label:first-child{margin-top:0}
+.int-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:10px}
+.int-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:16px 18px;cursor:pointer;transition:all var(--t)}
+.int-card:hover{border-color:var(--border2)}
+.int-card.connected{border-color:rgba(90,122,101,0.4)}
+.int-top{display:flex;align-items:flex-start;gap:10px;margin-bottom:8px}
+.int-logo{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:17px;background:var(--bg2);flex-shrink:0}
+.int-name{font-size:13.5px;font-weight:600;color:var(--ink)}
+.int-cat{font-size:11px;color:var(--ink3);margin-top:1px}
+.int-desc{font-size:12px;color:var(--ink3);line-height:1.5;margin-bottom:10px}
+.btn-connect{width:100%;padding:7px;border-radius:var(--rsm);background:var(--bg2);border:1px solid var(--border);font-family:var(--font-sans);font-size:12px;color:var(--ink2);cursor:pointer;transition:all var(--t);font-weight:500}
+.btn-connect:hover{background:var(--terra-bg);border-color:var(--terra);color:var(--terra)}
+.btn-connected{background:var(--sage-bg);border-color:rgba(90,122,101,0.3);color:var(--sage);cursor:default}
+.btn-connected:hover{background:var(--sage-bg);border-color:rgba(90,122,101,0.3);color:var(--sage)}
+
+/* ─────────────────────────────────────
+   MODAL
+───────────────────────────────────── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(30,26,22,.5);z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.modal-ov.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--rlg);width:440px;max-width:95vw;max-height:90vh;overflow-y:auto;box-shadow:var(--shadow-lg);animation:mu .2s ease}
+@keyframes mu{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.mh{padding:18px 22px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mh-title{font-family:var(--font-serif);font-size:16px;color:var(--ink);font-style:italic}
+.mc{width:26px;height:26px;border-radius:6px;background:var(--bg2);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--ink3);font-size:15px;transition:all var(--t)}
+.mc:hover{background:var(--bg3);color:var(--ink)}
+.mb{padding:18px 22px}
+.mf{padding:13px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+.fl{margin-bottom:13px}
+.fl label{display:block;font-size:11px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-bottom:5px}
+.fi,.fs,.fta{width:100%;background:var(--bg);border:1px solid var(--border2);border-radius:var(--rsm);padding:8px 11px;font-family:var(--font-sans);font-size:13px;color:var(--ink);outline:none;transition:border-color var(--t)}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--terra)}
+.fta{resize:vertical;min-height:70px}
+.fr{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  .sidebar{width:52px;min-width:52px}
+  .sb-brand .sb-brand-name,.sb-brand .sb-brand-sub,.sb-hello,.nb span,.nb-badge,.user-name,.user-sub{display:none}
+  .nb{justify-content:center;padding:10px}
+  .nb-icon{opacity:1}
+  .today-grid,.email-layout,.notes-layout{grid-template-columns:1fr}
+  .email-layout .email-view{display:none}
+  .content{padding:16px}
+}
+</style>
+</head>
+<body>
+<div class="shell">
+
+<!-- ══════════════ SIDEBAR ══════════════ -->
+<nav class="sidebar">
+  <div class="sb-brand">
+    <div class="sb-brand-name">ARIA</div>
+    <div class="sb-brand-sub">Secrétaire personnelle</div>
+  </div>
+  <div class="sb-hello">
+    <div class="sb-day" id="sb-day"></div>
+    <div class="sb-name">Bonjour, Yaqine</div>
+  </div>
+  <nav class="sb-nav">
+    <div class="nav-sec">Principal</div>
+    <button class="nb active" onclick="nav('aria',this)">
+      <div class="nb-icon">✦</div><span>ARIA</span>
+    </button>
+    <button class="nb" onclick="nav('today',this)">
+      <div class="nb-icon">◎</div><span>Aujourd'hui</span>
+      <span class="nb-badge" id="nb-today-count">—</span>
+    </button>
+    <button class="nb" onclick="nav('emails',this)">
+      <div class="nb-icon">✉</div><span>Emails</span>
+      <span class="nb-badge" id="nb-email-count" style="display:none">0</span>
+    </button>
+    <button class="nb" onclick="nav('notes',this)">
+      <div class="nb-icon">✏</div><span>Notes & To-do</span>
+    </button>
+    <div class="nav-sec">Business</div>
+    <button class="nb" onclick="nav('finance',this)">
+      <div class="nb-icon">€</div><span>Suivi financier</span>
+    </button>
+    <button class="nb" onclick="nav('integrations',this)">
+      <div class="nb-icon">⌘</div><span>Intégrations</span>
+      <div class="nb-dot" id="nb-int-dot" style="background:var(--ink3)"></div>
+    </button>
+  </nav>
+  <div class="sb-foot">
+    <div class="user-chip">
+      <div class="user-av">YM</div>
+      <div>
+        <div class="user-name">Yaqine Merghem</div>
+        <div class="user-sub">Multi-entrepreneur</div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══════════════ MAIN ══════════════ -->
+<main class="main">
+  <header class="topbar">
+    <div class="tb-title" id="tb-title">ARIA — Assistante personnelle</div>
+    <div class="tb-right">
+      <button class="btn-ghost btn-sm" onclick="openModal('task-modal')">+ Tâche</button>
+      <button class="btn-primary btn-sm" onclick="openModal('task-modal')">
+        <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Nouveau
+      </button>
+    </div>
+  </header>
+
+  <div class="content">
+
+    <!-- ══ PAGE ARIA ══ -->
+    <div class="page active" id="page-aria">
+      <div class="aria-shell">
+        <div class="aria-msgs" id="aria-msgs">
+
+          <div class="msg aria">
+            <div class="msg-av">A</div>
+            <div>
+              <div class="msg-bub">
+                <p>Bonjour Yaqine ✦ Je suis ARIA, votre secrétaire personnelle.</p>
+                <p>Je centralise vos <strong>4 activités</strong> — Attard Multimédia, YM BOOST, JDE Agency et Bobulfilas — pour que vous n'ayez qu'une chose à faire : <em>décider et agir</em>.</p>
+                <p>Connectez vos boîtes Gmail pour que je puisse vous préparer un briefing email chaque matin. En attendant, voici ce que je sais déjà :</p>
+              </div>
+              <div class="briefing">
+                <div class="br-date" id="br-date"></div>
+                <div class="br-title" id="br-title">Vos priorités du moment</div>
+                <div class="br-items" id="br-items">
+                  <div class="br-item"><div class="br-dot u"></div><span>Connecter vos boîtes Gmail pour activer le briefing email</span><span class="br-act">Config</span></div>
+                  <div class="br-item"><div class="br-dot n"></div><span>Vos notes et tâches vous attendent dans "Aujourd'hui"</span><span class="br-act">Todo</span></div>
+                  <div class="br-item"><div class="br-dot l"></div><span>Suivi financier YM BOOST &amp; Attard MM disponible</span><span class="br-act">Finance</span></div>
+                </div>
+              </div>
+              <div class="msg-chips" id="welcome-chips">
+                <div class="chip" onclick="quickMsg('Quelles sont mes priorités pour aujourd\'hui ?')">📋 Mes priorités</div>
+                <div class="chip" onclick="quickMsg('Résume ce que j\'ai à faire cette semaine')">📅 Vue semaine</div>
+                <div class="chip" onclick="nav('emails', document.querySelector(\'.nb:nth-child(3)\'))">✉ Connecter Gmail</div>
+                <div class="chip claude" onclick="openClaude('Aide-moi à organiser ma semaine en tant que multi-entrepreneur avec 4 activités : Attard Multimédia, YM BOOST, JDE Agency et Bobulfilas Twitch')">✦ Approfondir avec Claude →</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="aria-bar">
+          <div class="aria-wrap">
+            <textarea class="aria-ta" id="aria-input" rows="1"
+              placeholder="Posez une question, ajoutez une tâche, prenez une note..."
+              onkeydown="ariaKey(event)" oninput="ariaResize(this)"></textarea>
+            <button class="aria-send" onclick="ariaSend()">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </button>
+          </div>
+          <div class="hints">
+            <div class="hint" onclick="prefill('Priorise mes tâches d\'aujourd\'hui')">Prioriser mes tâches</div>
+            <div class="hint" onclick="prefill('Rédige un email de relance pour ma facture Attard impayée')">Relance facture</div>
+            <div class="hint" onclick="prefill('Aide-moi avec ma proposition YM BOOST')">Aide YM BOOST</div>
+            <div class="hint" onclick="prefill('Résume ma semaine et dis-moi sur quoi me concentrer')">Résumé semaine</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE TODAY ══ -->
+    <div class="page" id="page-today">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Aujourd'hui</div>
+          <div class="section-sub" id="today-sub"></div>
+        </div>
+      </div>
+      <div class="today-grid">
+        <div>
+          <div class="focus-card">
+            <div class="focus-label">★ Focus principal</div>
+            <div class="focus-headline" id="focus-headline">Votre journée commence</div>
+            <div class="focus-sub" id="focus-sub">Ajoutez vos tâches pour qu'ARIA les priorise automatiquement.</div>
+            <div class="todo-sec">Non négociable</div>
+            <div class="todo-list" id="todo-urgent"></div>
+            <div class="div"></div>
+            <div class="todo-sec">Important</div>
+            <div class="todo-list" id="todo-important"></div>
+            <div class="div"></div>
+            <div class="todo-sec">Si le temps</div>
+            <div class="todo-list" id="todo-bonus"></div>
+            <div class="todo-add" onclick="this.querySelector('input').focus()">
+              <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" style="color:var(--ink3);flex-shrink:0"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              <input class="todo-add-in" placeholder="Ajouter une tâche (Entrée pour valider)..." onkeydown="addTodo(event,this)">
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="pcrd">
+            <div class="card-title">Agenda — <span id="today-label"></span></div>
+            <div id="cal-events">
+              <div class="cal-ev"><div class="cal-time">09:00</div><div class="cal-bar" style="background:var(--am)"></div><div class="cal-info"><div class="cal-title2">Brief équipe Attard</div><div class="cal-desc2">Google Meet · 30 min</div></div></div>
+              <div class="cal-ev"><div class="cal-time">11:00</div><div class="cal-bar" style="background:var(--ym)"></div><div class="cal-info"><div class="cal-title2">Travail prop. YM BOOST</div><div class="cal-desc2">Bloc personnel · 2h</div></div></div>
+              <div class="cal-ev"><div class="cal-time">14:30</div><div class="cal-bar" style="background:var(--jde)"></div><div class="cal-info"><div class="cal-title2">Call client JDE</div><div class="cal-desc2">jdeagency.live@gmail.com</div></div></div>
+              <div class="cal-ev"><div class="cal-time">17:00</div><div class="cal-bar" style="background:var(--bob)"></div><div class="cal-info"><div class="cal-title2">Stream Twitch</div><div class="cal-desc2">Bobulfilas · ~2h</div></div></div>
+            </div>
+            <button class="btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:10px" onclick="openModal('event-modal')">+ Ajouter un événement</button>
+          </div>
+          <div class="pcrd">
+            <div class="card-title">Tâches par activité</div>
+            <div id="task-by-act"></div>
+          </div>
+          <div class="pcrd" style="border-color:rgba(196,113,74,0.3);background:var(--terra-bg)">
+            <div class="card-title" style="color:var(--terra)">✦ ARIA suggère</div>
+            <p style="font-size:12.5px;color:var(--ink2);line-height:1.6" id="aria-suggest">Connectez vos Gmail pour recevoir des suggestions basées sur vos vrais emails.</p>
+            <div class="chip claude" style="margin-top:10px;display:inline-flex" onclick="openClaude('Je gère 4 activités en parallèle : Attard Multimédia (agence), YM BOOST (consulting restauration), JDE Agency (branding) et Bobulfilas (Twitch). Comment organiser ma semaine pour ne rien oublier tout en gardant du temps pour chaque activité ?')">✦ Approfondir avec Claude</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE EMAILS ══ -->
+    <div class="page" id="page-emails">
+      <div class="section-header">
+        <div>
+          <div class="section-title">Emails</div>
+          <div class="section-sub" id="email-sub">Connectez vos boîtes pour unifier vos emails</div>
+        </div>
+        <button class="btn-ghost btn-sm" onclick="refreshEmails()">↺ Actualiser</button>
+      </div>
+
+      <!-- Account tabs -->
+      <div class="accounts-bar" id="accounts-bar">
+        <button class="acc-btn active" onclick="switchAccount('all',this)" id="acc-all">
+          <div class="acc-dot" style="background:var(--terra)"></div>
+          <span>Tous</span>
+          <span class="acc-count acc-unread" id="cnt-all" style="display:none">0</span>
+        </button>
+        <button class="acc-btn" onclick="switchAccount('am',this)" id="acc-am">
+          <div class="acc-dot" style="background:var(--am)"></div>
+          <span>Attard MM</span>
+          <span class="spill sp-warn" id="status-am" style="font-size:9px">Non connecté</span>
+        </button>
+        <button class="acc-btn" onclick="switchAccount('ym',this)" id="acc-ym">
+          <div class="acc-dot" style="background:var(--ym)"></div>
+          <span>YM BOOST · BOB</span>
+          <span class="spill sp-warn" id="status-ym" style="font-size:9px">Non connecté</span>
+        </button>
+        <button class="acc-btn" onclick="switchAccount('jde',this)" id="acc-jde">
+          <div class="acc-dot" style="background:var(--jde)"></div>
+          <span>JDE Agency</span>
+          <span class="spill sp-warn" id="status-jde" style="font-size:9px">Non connecté</span>
+        </button>
+        <button class="acc-btn" onclick="switchAccount('perso',this)" id="acc-perso">
+          <div class="acc-dot" style="background:var(--ink3)"></div>
+          <span>Perso BDY</span>
+          <span class="spill sp-warn" id="status-perso" style="font-size:9px">Non connecté</span>
+        </button>
+      </div>
+
+      <!-- Connect banner shown when no accounts connected -->
+      <div class="connect-banner" id="connect-banner">
+        <div class="cb-icon">✉</div>
+        <div class="cb-text">
+          <strong>Connectez vos boîtes Gmail</strong> pour voir vos emails triés par activité et priorité.<br>
+          <span style="font-size:11px">hub.attard@gmail.com · ymboost.contact@gmail.com · jdeagency.live@gmail.com · yaqine@groupebdy.fr</span>
+        </div>
+        <button class="btn-primary btn-sm" onclick="connectGmail('am')">Connecter</button>
+      </div>
+
+      <div class="email-layout">
+        <div class="email-list">
+          <div class="el-header">
+            <span class="el-title" id="el-title">Emails</span>
+            <div style="display:flex;gap:6px">
+              <select id="filter-priority" onchange="filterEmails()" style="font-size:11px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:3px 7px;color:var(--ink2);outline:none;cursor:pointer">
+                <option value="all">Tous</option>
+                <option value="urgent">Urgents</option>
+                <option value="normal">Normaux</option>
+              </select>
+            </div>
+          </div>
+          <div class="el-items" id="email-list-items">
+            <div class="empty" style="padding:30px 20px">
+              <div class="empty-icon">✉</div>
+              <div style="font-size:12px">Connectez un compte Gmail<br>pour voir vos emails ici</div>
+              <button class="btn-primary btn-sm" style="margin-top:12px" onclick="connectGmail('am')">Connecter le premier compte</button>
+            </div>
+          </div>
+        </div>
+        <div class="email-view" id="email-view">
+          <div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink3);font-size:13px;font-style:italic">
+            Sélectionnez un email
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE NOTES ══ -->
+    <div class="page" id="page-notes">
+      <div class="section-header">
+        <div><div class="section-title">Notes & Bloc-notes</div><div class="section-sub">Organisées par activité</div></div>
+        <button class="btn-primary btn-sm" onclick="newNote()">+ Nouvelle note</button>
+      </div>
+      <div class="notes-layout">
+        <div class="notes-list">
+          <div class="nl-header">
+            <span style="font-size:11px;font-weight:600;color:var(--ink2)">Mes notes</span>
+            <select id="note-filter" onchange="renderNoteList()" style="font-size:10px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;padding:2px 6px;color:var(--ink3);outline:none;cursor:pointer">
+              <option value="all">Toutes</option>
+              <option value="am">Attard MM</option>
+              <option value="ym">YM BOOST</option>
+              <option value="jde">JDE</option>
+              <option value="bob">BOB</option>
+            </select>
+          </div>
+          <div class="nl-items" id="note-list"></div>
+        </div>
+        <div class="notes-editor">
+          <div class="ne-toolbar">
+            <input class="ne-title" id="ne-title" placeholder="Titre de la note..." oninput="saveNote()">
+            <select class="ne-sel" id="ne-act" onchange="saveNote()">
+              <option value="am">Attard MM</option>
+              <option value="ym">YM BOOST</option>
+              <option value="jde">JDE Agency</option>
+              <option value="bob">Bobulfilas</option>
+              <option value="">Général</option>
+            </select>
+            <button class="ne-ask-btn" onclick="askClaude()">✦ Claude</button>
+          </div>
+          <div class="ne-body">
+            <textarea class="ne-ta" id="ne-body" placeholder="Commencez à écrire..." oninput="saveNote()"></textarea>
+          </div>
+          <div class="ne-foot">
+            <span style="font-size:11px;color:var(--ink3)" id="ne-saved">—</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE FINANCE ══ -->
+    <div class="page" id="page-finance">
+      <div class="section-header">
+        <div><div class="section-title">Suivi financier</div><div class="section-sub">Auto-entrepreneur · YM BOOST & Attard MM</div></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn-ghost btn-sm" onclick="openModal('invoice-modal')">+ Facture</button>
+          <button class="btn-primary btn-sm" onclick="openModal('txn-modal')">+ Transaction</button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px" id="fin-kpis"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:860px">
+        <div class="card">
+          <div class="card-title" style="display:flex;align-items:center;gap:7px">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--ym);display:inline-block"></span>YM BOOST — Factures
+          </div>
+          <div id="ym-invoices"></div>
+          <button class="btn-ghost btn-sm" style="width:100%;justify-content:center;margin-top:10px" onclick="openModal('invoice-modal')">+ Nouvelle facture</button>
+        </div>
+        <div class="card">
+          <div class="card-title" style="display:flex;align-items:center;gap:7px">
+            <span style="width:7px;height:7px;border-radius:50%;background:var(--am);display:inline-block"></span>Attard MM — Factures
+          </div>
+          <div id="am-invoices"></div>
+          <button class="btn-primary btn-sm" style="width:100%;justify-content:center;margin-top:10px" onclick="openClaude('Rédige un email de relance professionnel pour la facture Attard AM-2024-018 d\'un montant de 2100€ adressée à Agence Bloom, en attente depuis 14 jours. Ton style : professionnel mais direct.')">✦ ARIA : Rédiger relance facture</button>
+        </div>
+        <div class="card" style="grid-column:1/-1">
+          <div class="card-title">Dernières transactions</div>
+          <div id="txn-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ PAGE INTÉGRATIONS ══ -->
+    <div class="page" id="page-integrations">
+      <div class="section-header">
+        <div><div class="section-title">Intégrations</div><div class="section-sub">Connectez vos outils pour centraliser votre quotidien</div></div>
+      </div>
+
+      <div class="int-sec-label">📧 Gmail — vos 4 adresses</div>
+      <div class="int-grid">
+        <div class="int-card" id="int-card-am">
+          <div class="int-top">
+            <div class="int-logo" style="background:var(--am-bg)">✉</div>
+            <div>
+              <div class="int-name">Attard Multimédia</div>
+              <div class="int-cat">hub.attard@gmail.com</div>
+            </div>
+          </div>
+          <div class="int-desc">Projets clients, devis, facturation Attard MM</div>
+          <div id="status-int-am"></div>
+          <button class="btn-connect" id="btn-int-am" onclick="connectGmail('am')">Connecter →</button>
+        </div>
+        <div class="int-card" id="int-card-ym">
+          <div class="int-top">
+            <div class="int-logo" style="background:var(--ym-bg)">✉</div>
+            <div>
+              <div class="int-name">YM BOOST · Bobulfilas</div>
+              <div class="int-cat">ymboost.contact@gmail.com</div>
+            </div>
+          </div>
+          <div class="int-desc">Restaurateurs, consulting, stream Twitch</div>
+          <div id="status-int-ym"></div>
+          <button class="btn-connect" id="btn-int-ym" onclick="connectGmail('ym')">Connecter →</button>
+        </div>
+        <div class="int-card" id="int-card-jde">
+          <div class="int-top">
+            <div class="int-logo" style="background:var(--jde-bg)">✉</div>
+            <div>
+              <div class="int-name">JDE Agency</div>
+              <div class="int-cat">jdeagency.live@gmail.com</div>
+            </div>
+          </div>
+          <div class="int-desc">Clients branding, briefs, propositions</div>
+          <div id="status-int-jde"></div>
+          <button class="btn-connect" id="btn-int-jde" onclick="connectGmail('jde')">Connecter →</button>
+        </div>
+        <div class="int-card" id="int-card-perso">
+          <div class="int-top">
+            <div class="int-logo" style="background:var(--bg3)">✉</div>
+            <div>
+              <div class="int-name">Perso — Groupe BDY</div>
+              <div class="int-cat">yaqine@groupebdy.fr</div>
+            </div>
+          </div>
+          <div class="int-desc">Email personnel et professionnel groupe</div>
+          <div id="status-int-perso"></div>
+          <button class="btn-connect" id="btn-int-perso" onclick="connectGmail('perso')">Connecter →</button>
+        </div>
+      </div>
+
+      <div class="int-sec-label">🧠 Intelligence artificielle (redirection gratuite)</div>
+      <div class="int-grid">
+        <div class="int-card connected">
+          <div class="int-top">
+            <div class="int-logo">✦</div>
+            <div><div class="int-name">Claude (Anthropic)</div><div class="int-cat">Redirection vers claude.ai</div></div>
+          </div>
+          <div class="int-desc">Pour les questions complexes — ARIA ouvre Claude avec le contexte déjà rédigé. Utilise ton abonnement Pro existant.</div>
+          <button class="btn-connected">✓ Actif — utilise ton abonnement Pro</button>
+        </div>
+        <div class="int-card connected">
+          <div class="int-top">
+            <div class="int-logo">⬡</div>
+            <div><div class="int-name">ChatGPT (OpenAI)</div><div class="int-cat">Redirection vers chatgpt.com</div></div>
+          </div>
+          <div class="int-desc">Alternative IA — ARIA ouvre ChatGPT avec le contexte pré-rempli. Utilise ton abonnement existant.</div>
+          <button class="btn-connected">✓ Actif — utilise ton abonnement</button>
+        </div>
+        <div class="int-card">
+          <div class="int-top">
+            <div class="int-logo">📅</div>
+            <div><div class="int-name">Google Calendar</div><div class="int-cat">Agenda unifié</div></div>
+          </div>
+          <div class="int-desc">Prochaine étape — voir tous vos agendas en un seul endroit une fois Gmail connecté.</div>
+          <button class="btn-connect" onclick="alert('Connectez d\'abord vos comptes Gmail — le calendrier s\'active automatiquement avec la même OAuth.')">Bientôt disponible</button>
+        </div>
+        <div class="int-card">
+          <div class="int-top">
+            <div class="int-logo">📁</div>
+            <div><div class="int-name">Google Drive</div><div class="int-cat">Factures & documents</div></div>
+          </div>
+          <div class="int-desc">Ranger automatiquement vos documents dans les bons dossiers par activité.</div>
+          <button class="btn-connect" onclick="alert('Disponible après connexion Gmail.')">Bientôt disponible</button>
+        </div>
+      </div>
+
+      <div class="int-sec-label">⚙️ Outils métier</div>
+      <div class="int-grid">
+        <div class="int-card"><div class="int-top"><div class="int-logo">⚙️</div><div><div class="int-name">Make</div><div class="int-cat">AM · JDE · Automatisation</div></div></div><div class="int-desc">Connecter vos scénarios Make pour les déclencher depuis ARIA.</div><button class="btn-connect" onclick="openModal('api-modal')">Clé API →</button></div>
+        <div class="int-card"><div class="int-top"><div class="int-logo">📋</div><div><div class="int-name">Notion</div><div class="int-cat">AM · JDE · Base de données</div></div></div><div class="int-desc">Synchroniser vos bases Notion avec ARIA.</div><button class="btn-connect" onclick="openModal('api-modal')">Token →</button></div>
+        <div class="int-card"><div class="int-top"><div class="int-logo">💳</div><div><div class="int-name">SumUp</div><div class="int-cat">YM BOOST · Paiements</div></div></div><div class="int-desc">Voir vos encaissements SumUp en temps réel.</div><button class="btn-connect" onclick="openModal('api-modal')">Clé API →</button></div>
+        <div class="int-card"><div class="int-top"><div class="int-logo">🟣</div><div><div class="int-name">Twitch</div><div class="int-cat">Bobulfilas · Stats</div></div></div><div class="int-desc">Abonnés, planning streams, revenus Twitch.</div><button class="btn-connect" onclick="openModal('api-modal')">Connecter →</button></div>
+      </div>
+    </div>
+
+  </div><!-- end .content -->
+</main>
+</div><!-- end .shell -->
+
+<!-- ══════════════ MODALS ══════════════ -->
+
+<!-- Task modal -->
+<div class="modal-ov" id="task-modal" onclick="closeMOV(event,'task-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Nouvelle tâche</div><button class="mc" onclick="closeModal('task-modal')">✕</button></div>
+    <div class="mb">
+      <div class="fl"><label>Tâche *</label><input type="text" class="fi" id="new-task-text" placeholder="Que devez-vous faire ?"></div>
+      <div class="fr">
+        <div class="fl"><label>Activité</label><select class="fs" id="new-task-act"><option value="am">Attard MM</option><option value="ym">YM BOOST</option><option value="jde">JDE Agency</option><option value="bob">Bobulfilas</option><option value="">Général</option></select></div>
+        <div class="fl"><label>Niveau</label><select class="fs" id="new-task-level"><option value="urgent">Non négociable</option><option value="important" selected>Important</option><option value="bonus">Si le temps</option></select></div>
+      </div>
+      <div class="fl"><label>Date</label><input type="date" class="fi" id="new-task-date"></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('task-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="createTask()">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- Invoice modal -->
+<div class="modal-ov" id="invoice-modal" onclick="closeMOV(event,'invoice-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Nouvelle facture</div><button class="mc" onclick="closeModal('invoice-modal')">✕</button></div>
+    <div class="mb">
+      <div class="fr">
+        <div class="fl"><label>Activité</label><select class="fs" id="inv-act"><option value="ym">YM BOOST</option><option value="am">Attard MM</option></select></div>
+        <div class="fl"><label>Numéro</label><input type="text" class="fi" id="inv-num" placeholder="YM-2025-10"></div>
+      </div>
+      <div class="fl"><label>Client *</label><input type="text" class="fi" id="inv-client" placeholder="Nom du client"></div>
+      <div class="fr">
+        <div class="fl"><label>Montant (€)</label><input type="number" class="fi" id="inv-amount"></div>
+        <div class="fl"><label>Statut</label><select class="fs" id="inv-status"><option value="pending">En attente</option><option value="paid">Payée</option><option value="late">En retard</option></select></div>
+      </div>
+      <div class="fl"><label>Description</label><textarea class="fta" id="inv-desc" placeholder="Détail de la prestation..."></textarea></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('invoice-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="createInvoice()">Créer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Transaction modal -->
+<div class="modal-ov" id="txn-modal" onclick="closeMOV(event,'txn-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Ajouter une transaction</div><button class="mc" onclick="closeModal('txn-modal')">✕</button></div>
+    <div class="mb">
+      <div class="fr">
+        <div class="fl"><label>Type</label><select class="fs" id="txn-type"><option value="income">Revenu</option><option value="expense">Dépense</option></select></div>
+        <div class="fl"><label>Montant (€)</label><input type="number" class="fi" id="txn-amount"></div>
+      </div>
+      <div class="fr">
+        <div class="fl"><label>Activité</label><select class="fs" id="txn-act"><option value="ym">YM BOOST</option><option value="am">Attard MM</option><option value="jde">JDE Agency</option><option value="bob">Bobulfilas</option></select></div>
+        <div class="fl"><label>Date</label><input type="date" class="fi" id="txn-date"></div>
+      </div>
+      <div class="fl"><label>Description</label><input type="text" class="fi" id="txn-desc" placeholder="Description..."></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('txn-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="createTxn()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- Event modal -->
+<div class="modal-ov" id="event-modal" onclick="closeMOV(event,'event-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Nouvel événement</div><button class="mc" onclick="closeModal('event-modal')">✕</button></div>
+    <div class="mb">
+      <div class="fl"><label>Titre *</label><input type="text" class="fi" id="ev-title" placeholder="Intitulé..."></div>
+      <div class="fr">
+        <div class="fl"><label>Date</label><input type="date" class="fi" id="ev-date"></div>
+        <div class="fl"><label>Heure</label><input type="time" class="fi" id="ev-time"></div>
+      </div>
+      <div class="fl"><label>Activité</label><select class="fs" id="ev-act"><option value="am">Attard MM</option><option value="ym">YM BOOST</option><option value="jde">JDE Agency</option><option value="bob">Bobulfilas</option><option value="">Personnel</option></select></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('event-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="closeModal('event-modal')">Ajouter</button>
+    </div>
+  </div>
+</div>
+
+<!-- API key modal -->
+<div class="modal-ov" id="api-modal" onclick="closeMOV(event,'api-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Connecter un outil</div><button class="mc" onclick="closeModal('api-modal')">✕</button></div>
+    <div class="mb">
+      <div style="padding:12px 14px;background:var(--terra-bg);border-radius:var(--rsm);border:1px solid rgba(196,113,74,0.2);margin-bottom:14px;font-size:12.5px;color:var(--ink2)">
+        ✦ ARIA stocke votre clé uniquement dans votre navigateur (localStorage). Elle n'est jamais envoyée ailleurs.
+      </div>
+      <div class="fl"><label>Outil</label><select class="fs"><option>Make</option><option>Notion</option><option>SumUp</option><option>Twitch</option></select></div>
+      <div class="fl"><label>Clé API / Token</label><input type="password" class="fi" placeholder="Collez votre clé ici..."></div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('api-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="closeModal('api-modal')">Connecter</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ GOOGLE IDENTITY SERVICES ══════════════ -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+// ══════════════════════════════════════════
+// CONFIG
+// ══════════════════════════════════════════
+const CLIENT_ID = '932930451924-p0h6ao9elkp0o1a9qkg788pqs6d406a3.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly';
+
+const ACCOUNTS = {
+  am:    { label:'Attard MM',       email:'hub.attard@gmail.com',          color:'var(--am)',    tag:'t-am'   },
+  ym:    { label:'YM BOOST · BOB',  email:'ymboost.contact@gmail.com',     color:'var(--ym)',    tag:'t-ym'   },
+  jde:   { label:'JDE Agency',      email:'jdeagency.live@gmail.com',      color:'var(--jde)',   tag:'t-jde'  },
+  perso: { label:'Perso BDY',       email:'yaqine@groupebdy.fr',           color:'var(--ink3)',  tag:'t-perso'}
+};
+
+// State
+let state = {
+  tokens: {},          // { am: 'token', ym: 'token', ... }
+  emails: [],          // all fetched emails
+  currentAccount: 'all',
+  currentEmail: null,
+  tasks: [],
+  notes: [],
+  invoices: [],
+  transactions: [],
+  currentNote: null,
+};
+
+// Load persisted state
+function loadState() {
+  try {
+    const saved = localStorage.getItem('aria_state_v2');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      state.tasks        = parsed.tasks        || [];
+      state.notes        = parsed.notes        || [];
+      state.invoices     = parsed.invoices     || defaultInvoices();
+      state.transactions = parsed.transactions || defaultTxns();
+      state.tokens       = parsed.tokens       || {};
+    } else {
+      state.invoices     = defaultInvoices();
+      state.transactions = defaultTxns();
+    }
+  } catch(e) {
+    state.invoices     = defaultInvoices();
+    state.transactions = defaultTxns();
+  }
+}
+
+function saveState() {
+  try {
+    localStorage.setItem('aria_state_v2', JSON.stringify({
+      tasks: state.tasks,
+      notes: state.notes,
+      invoices: state.invoices,
+      transactions: state.transactions,
+      tokens: state.tokens,
+    }));
+  } catch(e) {}
+}
+
+// ══════════════════════════════════════════
+// INIT
+// ══════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', () => {
+  loadState();
+  setDates();
+  renderAll();
+  checkConnectedAccounts();
+});
+
+function setDates() {
+  const days = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+  const months = ['Janvier','Février','Mars','Avril','Mai','Juin','Juillet','Août','Septembre','Octobre','Novembre','Décembre'];
+  const now = new Date();
+  const short = `${days[now.getDay()]} ${now.getDate()} ${months[now.getMonth()]}`;
+  const full  = `${short} ${now.getFullYear()}`;
+  document.getElementById('sb-day').textContent      = short;
+  const brDate = document.getElementById('br-date');
+  if (brDate) brDate.textContent = full;
+  const tSub = document.getElementById('today-sub');
+  if (tSub) tSub.textContent = `${short} · ${state.tasks.length} tâche${state.tasks.length !== 1 ? 's' : ''}`;
+  const tLabel = document.getElementById('today-label');
+  if (tLabel) tLabel.textContent = short;
+}
+
+function renderAll() {
+  renderTodos();
+  renderTaskByAct();
+  renderFinance();
+  renderNoteList();
+  updateEmailBadge();
+}
+
+// ══════════════════════════════════════════
+// NAVIGATION
+// ══════════════════════════════════════════
+const PAGE_TITLES = {
+  aria:'ARIA — Assistante personnelle', today:"Aujourd'hui",
+  emails:'Emails', notes:'Notes & Bloc-notes',
+  finance:'Suivi financier', integrations:'Intégrations'
+};
+
+function nav(id, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nb').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  document.getElementById('tb-title').textContent = PAGE_TITLES[id] || '';
+  if (id === 'today') renderTodos();
+  if (id === 'notes') renderNoteList();
+  if (id === 'finance') renderFinance();
+  if (id === 'emails') renderEmailPage();
+}
+
+// ══════════════════════════════════════════
+// GMAIL OAUTH
+// ══════════════════════════════════════════
+function connectGmail(accountKey) {
+  const account = ACCOUNTS[accountKey];
+  if (!account) return;
+
+  // Use Google Identity Services token model
+  if (typeof google === 'undefined' || !google.accounts) {
+    showAuthFallback(accountKey);
+    return;
+  }
+
+  const tokenClient = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    hint: account.email,
+    callback: (response) => {
+      if (response.error) {
+        alert('Erreur de connexion : ' + response.error + '\n\nVérifiez que vous avez bien ajouté cet email comme "utilisateur test" dans Google Cloud Console.');
+        return;
+      }
+      state.tokens[accountKey] = response.access_token;
+      saveState();
+      updateAccountStatus(accountKey, true);
+      fetchEmailsForAccount(accountKey, response.access_token);
+    },
+  });
+  tokenClient.requestAccessToken();
+}
+
+function showAuthFallback(accountKey) {
+  // Fallback: direct OAuth URL if GIS not loaded
+  const params = new URLSearchParams({
+    client_id: CLIENT_ID,
+    redirect_uri: window.location.href.split('?')[0],
+    response_type: 'token',
+    scope: SCOPES,
+    login_hint: ACCOUNTS[accountKey].email,
+    state: accountKey
+  });
+  window.open('https://accounts.google.com/o/oauth2/v2/auth?' + params.toString(), '_blank', 'width=500,height=600');
+}
+
+// Handle OAuth redirect (token in hash)
+function handleOAuthRedirect() {
+  const hash = window.location.hash;
+  if (!hash.includes('access_token')) return;
+  const params = new URLSearchParams(hash.slice(1));
+  const token = params.get('access_token');
+  const accountKey = params.get('state') || 'am';
+  if (token && accountKey) {
+    state.tokens[accountKey] = token;
+    saveState();
+    updateAccountStatus(accountKey, true);
+    fetchEmailsForAccount(accountKey, token);
+    window.history.replaceState({}, '', window.location.pathname);
+  }
+}
+handleOAuthRedirect();
+
+// ══════════════════════════════════════════
+// GMAIL API — FETCH EMAILS
+// ══════════════════════════════════════════
+async function fetchEmailsForAccount(accountKey, token) {
+  if (!token) return;
+
+  updateAccountStatus(accountKey, 'loading');
+
+  try {
+    // Fetch message list
+    const listResp = await fetch(
+      'https://gmail.googleapis.com/gmail/v1/users/me/messages?maxResults=20&q=is:unread',
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+
+    if (listResp.status === 401) {
+      // Token expired — clear and prompt reconnect
+      delete state.tokens[accountKey];
+      saveState();
+      updateAccountStatus(accountKey, false);
+      return;
+    }
+
+    const listData = await listResp.json();
+    const messages = listData.messages || [];
+
+    if (messages.length === 0) {
+      updateAccountStatus(accountKey, true, 0);
+      renderEmailList();
+      return;
+    }
+
+    // Fetch each message (parallel, max 10)
+    const fetched = await Promise.all(
+      messages.slice(0, 15).map(m =>
+        fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`,
+          { headers: { Authorization: 'Bearer ' + token } }
+        ).then(r => r.json())
+      )
+    );
+
+    const parsed = fetched.map(msg => parseGmailMessage(msg, accountKey));
+    // Remove old emails from this account, add new ones
+    state.emails = state.emails.filter(e => e.account !== accountKey).concat(parsed);
+    state.emails.sort((a,b) => b.date - a.date);
+
+    updateAccountStatus(accountKey, true, parsed.length);
+    updateEmailBadge();
+    renderEmailList();
+
+    // Update briefing
+    updateBriefingFromEmails();
+
+  } catch(err) {
+    console.error('Gmail fetch error:', err);
+    updateAccountStatus(accountKey, false);
+  }
+}
+
+function parseGmailMessage(msg, accountKey) {
+  const headers = msg.payload?.headers || [];
+  const get = (name) => headers.find(h => h.name.toLowerCase() === name.toLowerCase())?.value || '';
+
+  const from    = get('From');
+  const subject = get('Subject') || '(sans objet)';
+  const dateStr = get('Date');
+  const snippet = msg.snippet || '';
+  const isUnread = msg.labelIds?.includes('UNREAD');
+
+  // Parse date
+  const date = dateStr ? new Date(dateStr) : new Date();
+
+  // Extract sender name
+  const fromMatch = from.match(/^(.+?)\s*</) || from.match(/^(.+)$/);
+  const fromName  = fromMatch ? fromMatch[1].replace(/"/g,'').trim() : from;
+  const fromEmail = from.match(/<(.+?)>/)? from.match(/<(.+?)>/)[1] : from;
+
+  // Auto-detect priority
+  const urgentKeywords = /urgent|asap|important|rappel|relance|deadline|demain|aujourd'hui|facteur|impayé/i;
+  const priority = urgentKeywords.test(subject + snippet) ? 'urgent' : 'normal';
+
+  return {
+    id: msg.id,
+    account: accountKey,
+    from: fromName,
+    fromEmail,
+    subject,
+    snippet,
+    date,
+    dateLabel: formatEmailDate(date),
+    isUnread,
+    priority,
+    body: null // loaded on demand
+  };
+}
+
+function formatEmailDate(date) {
+  const now = new Date();
+  const diff = now - date;
+  if (diff < 3600000) return Math.floor(diff/60000) + ' min';
+  if (diff < 86400000) return Math.floor(diff/3600000) + 'h';
+  if (diff < 604800000) return ['Dim','Lun','Mar','Mer','Jeu','Ven','Sam'][date.getDay()];
+  return date.getDate() + '/' + (date.getMonth()+1);
+}
+
+async function fetchEmailBody(emailId, accountKey) {
+  const token = state.tokens[accountKey];
+  if (!token) return null;
+  try {
+    const resp = await fetch(
+      `https://gmail.googleapis.com/gmail/v1/users/me/messages/${emailId}?format=full`,
+      { headers: { Authorization: 'Bearer ' + token } }
+    );
+    const data = await resp.json();
+    return extractBody(data.payload);
+  } catch(e) { return null; }
+}
+
+function extractBody(payload) {
+  if (!payload) return '';
+  if (payload.mimeType === 'text/plain' && payload.body?.data) {
+    return atob(payload.body.data.replace(/-/g,'+').replace(/_/g,'/'));
+  }
+  if (payload.parts) {
+    for (const part of payload.parts) {
+      const body = extractBody(part);
+      if (body) return body;
+    }
+  }
+  return '';
+}
+
+// ══════════════════════════════════════════
+// EMAIL UI
+// ══════════════════════════════════════════
+function updateAccountStatus(accountKey, status, count) {
+  const statusEl = document.getElementById('status-' + accountKey);
+  const btnEl    = document.getElementById('btn-int-' + accountKey);
+  const accBtn   = document.getElementById('acc-' + accountKey);
+  const intCard  = document.getElementById('int-card-' + accountKey);
+
+  if (status === 'loading') {
+    if (statusEl) statusEl.innerHTML = '<span class="spill sp-info">Chargement...</span>';
+    return;
+  }
+
+  if (status === true) {
+    const label = count !== undefined ? `${count} non lus` : 'Connecté';
+    if (statusEl) statusEl.innerHTML = `<span class="spill sp-ok" style="margin-bottom:8px;display:inline-flex">✓ ${label}</span>`;
+    if (btnEl)    { btnEl.textContent = '↺ Reconnecter'; btnEl.className = 'btn-connect'; }
+    if (accBtn)   accBtn.classList.add('connected');
+    if (intCard)  intCard.classList.add('connected');
+    // Update tab status
+    const tabSt = document.getElementById('status-' + accountKey);
+    if (tabSt) tabSt.innerHTML = `<span class="spill sp-ok" style="font-size:9px">✓ ${label}</span>`;
+  } else {
+    if (statusEl) statusEl.innerHTML = '<span class="spill sp-warn" style="margin-bottom:8px;display:inline-flex">Non connecté</span>';
+    if (btnEl)    { btnEl.textContent = 'Connecter →'; btnEl.className = 'btn-connect'; }
+  }
+
+  // Show/hide connect banner
+  const anyConnected = Object.keys(state.tokens).length > 0;
+  const banner = document.getElementById('connect-banner');
+  if (banner) banner.style.display = anyConnected ? 'none' : 'flex';
+
+  // Update sidebar dot
+  const allConnected = Object.keys(state.tokens).length === 4;
+  const dot = document.getElementById('nb-int-dot');
+  if (dot) dot.style.background = allConnected ? 'var(--sage)' : (anyConnected ? 'var(--caution)' : 'var(--ink3)');
+}
+
+function checkConnectedAccounts() {
+  Object.keys(state.tokens).forEach(key => {
+    if (state.tokens[key]) {
+      updateAccountStatus(key, true);
+      // Refresh emails on load
+      fetchEmailsForAccount(key, state.tokens[key]);
+    }
+  });
+  const anyConnected = Object.keys(state.tokens).length > 0;
+  const banner = document.getElementById('connect-banner');
+  if (banner) banner.style.display = anyConnected ? 'none' : 'flex';
+}
+
+let currentAccountFilter = 'all';
+function switchAccount(key, btn) {
+  currentAccountFilter = key;
+  document.querySelectorAll('.acc-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderEmailList();
+}
+
+function filterEmails() { renderEmailList(); }
+
+function getFilteredEmails() {
+  let emails = [...state.emails];
+  if (currentAccountFilter !== 'all') {
+    emails = emails.filter(e => e.account === currentAccountFilter);
+  }
+  const prio = document.getElementById('filter-priority')?.value;
+  if (prio === 'urgent') emails = emails.filter(e => e.priority === 'urgent');
+  if (prio === 'normal') emails = emails.filter(e => e.priority === 'normal');
+  return emails;
+}
+
+function renderEmailPage() {
+  renderEmailList();
+  // Update sub
+  const total = state.emails.length;
+  const unread = state.emails.filter(e => e.isUnread).length;
+  const sub = document.getElementById('email-sub');
+  if (sub) sub.textContent = total > 0
+    ? `${total} emails · ${unread} non lus — triés par priorité`
+    : 'Connectez vos boîtes pour unifier vos emails';
+}
+
+function renderEmailList() {
+  const container = document.getElementById('email-list-items');
+  if (!container) return;
+  const emails = getFilteredEmails();
+
+  const el = document.getElementById('el-title');
+  if (el) el.textContent = `${emails.length} email${emails.length !== 1 ? 's' : ''}`;
+
+  if (emails.length === 0) {
+    const anyConnected = Object.keys(state.tokens).length > 0;
+    container.innerHTML = `<div class="empty" style="padding:30px 20px">
+      <div class="empty-icon">✉</div>
+      <div style="font-size:12px">${anyConnected ? 'Aucun email non lu' : 'Connectez un compte Gmail'}</div>
+      ${!anyConnected ? '<button class="btn-primary btn-sm" style="margin-top:12px" onclick="connectGmail(\'am\')">Connecter</button>' : ''}
+    </div>`;
+    return;
+  }
+
+  // Sort: urgent first, then by date
+  const sorted = [...emails].sort((a,b) => {
+    if (a.priority === 'urgent' && b.priority !== 'urgent') return -1;
+    if (b.priority === 'urgent' && a.priority !== 'urgent') return 1;
+    return b.date - a.date;
+  });
+
+  container.innerHTML = sorted.map((email, i) => {
+    const acc = ACCOUNTS[email.account];
+    return `<div class="email-item ${email.isUnread ? 'unread' : ''} ${state.currentEmail?.id === email.id ? 'active' : ''}"
+      onclick="openEmail(${i}, this)" style="position:relative">
+      <div class="priority-flag" style="background:${email.priority === 'urgent' ? 'var(--terra)' : 'transparent'}"></div>
+      <div class="ei-top">
+        <span class="ei-from">${escHtml(email.from)}</span>
+        <span class="ei-time">${email.dateLabel}</span>
+      </div>
+      <div class="ei-subject">${escHtml(email.subject)}</div>
+      <div class="ei-preview">${escHtml(email.snippet)}</div>
+      <div class="ei-tags">
+        <span class="atag ${acc?.tag || 't-perso'}" style="font-size:10px;padding:1px 5px">${acc?.label || email.account}</span>
+        ${email.priority === 'urgent' ? '<span class="atag" style="background:var(--terra-bg);color:var(--terra);font-size:10px;padding:1px 5px">Urgent</span>' : ''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function openEmail(sortedIdx, el) {
+  // Get sorted list again
+  const emails = getFilteredEmails().sort((a,b) => {
+    if (a.priority === 'urgent' && b.priority !== 'urgent') return -1;
+    if (b.priority === 'urgent' && a.priority !== 'urgent') return 1;
+    return b.date - a.date;
+  });
+  const email = emails[sortedIdx];
+  if (!email) return;
+
+  state.currentEmail = email;
+  document.querySelectorAll('.email-item').forEach(i => i.classList.remove('active'));
+  el.classList.add('active');
+
+  const view = document.getElementById('email-view');
+  if (!view) return;
+  const acc = ACCOUNTS[email.account];
+
+  view.innerHTML = `
+    <div class="ev-header">
+      <div class="ev-subject">${escHtml(email.subject)}</div>
+      <div class="ev-meta">
+        <span class="ev-from">De : ${escHtml(email.from)} &lt;${escHtml(email.fromEmail)}&gt;</span>
+        <span class="atag ${acc?.tag || ''}">${acc?.label || email.account}</span>
+        ${email.priority === 'urgent' ? '<span class="atag" style="background:var(--terra-bg);color:var(--terra)">Urgent</span>' : ''}
+        <span class="ev-time">${email.date.toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'})}</span>
+      </div>
+    </div>
+    <div class="ev-body" id="ev-body-content">
+      <div style="display:flex;align-items:center;gap:8px;color:var(--ink3);font-size:13px">
+        <div class="td"></div><div class="td"></div><div class="td"></div>
+        Chargement du contenu...
+      </div>
+    </div>
+    <div class="ev-actions">
+      <button class="btn-ghost btn-sm" onclick="replyEmail()">↩ Répondre</button>
+      <button class="btn-ghost btn-sm" onclick="archiveEmail()">Archive</button>
+      <button class="btn-primary btn-sm" onclick="openClaudeWithEmail()">✦ Répondre avec Claude</button>
+    </div>
+  `;
+
+  // Load body async
+  const body = await fetchEmailBody(email.id, email.account);
+  const bodyEl = document.getElementById('ev-body-content');
+  if (bodyEl) {
+    bodyEl.textContent = body ? body.replace(/\r\n|\r|\n/g, '\n').trim() : email.snippet;
+    bodyEl.style.whiteSpace = 'pre-wrap';
+    bodyEl.style.fontFamily = 'var(--font-sans)';
+  }
+}
+
+function openClaudeWithEmail() {
+  const e = state.currentEmail;
+  if (!e) return;
+  const prompt = `J'ai reçu cet email de ${e.from} (${e.fromEmail}) :\n\nObjet : ${e.subject}\n\n${e.snippet}\n\nAide-moi à rédiger une réponse professionnelle et concise pour mon activité ${ACCOUNTS[e.account]?.label || e.account}.`;
+  openClaude(prompt);
+}
+
+function replyEmail() {
+  const e = state.currentEmail;
+  if (!e) return;
+  window.open(`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(e.fromEmail)}&su=Re: ${encodeURIComponent(e.subject)}`, '_blank');
+}
+
+function archiveEmail() {
+  if (!state.currentEmail) return;
+  state.emails = state.emails.filter(em => em.id !== state.currentEmail.id);
+  state.currentEmail = null;
+  renderEmailList();
+  document.getElementById('email-view').innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--ink3);font-size:13px;font-style:italic">Email archivé</div>';
+  updateEmailBadge();
+}
+
+function updateEmailBadge() {
+  const unread = state.emails.filter(e => e.isUnread).length;
+  const badge = document.getElementById('nb-email-count');
+  if (badge) {
+    if (unread > 0) { badge.textContent = unread; badge.style.display = ''; }
+    else badge.style.display = 'none';
+  }
+}
+
+function refreshEmails() {
+  Object.keys(state.tokens).forEach(key => {
+    if (state.tokens[key]) fetchEmailsForAccount(key, state.tokens[key]);
+  });
+}
+
+// ══════════════════════════════════════════
+// BRIEFING
+// ══════════════════════════════════════════
+function updateBriefingFromEmails() {
+  const urgents = state.emails.filter(e => e.priority === 'urgent' && e.isUnread).slice(0, 2);
+  const items = document.getElementById('br-items');
+  const title = document.getElementById('br-title');
+  if (!items) return;
+
+  const taskCount = state.tasks.length;
+  const unread = state.emails.filter(e => e.isUnread).length;
+
+  if (urgents.length > 0 || taskCount > 0 || unread > 0) {
+    title.textContent = `${urgents.length + taskCount} points requièrent votre attention.`;
+    let html = '';
+    urgents.forEach(e => {
+      const acc = ACCOUNTS[e.account];
+      html += `<div class="br-item"><div class="br-dot u"></div><span>Email urgent : ${escHtml(e.subject.substring(0,50))}</span><span class="br-act">${acc?.label || ''}</span></div>`;
+    });
+    if (taskCount > 0) {
+      const urgent = state.tasks.filter(t => t.level === 'urgent').slice(0,2);
+      urgent.forEach(t => {
+        html += `<div class="br-item"><div class="br-dot n"></div><span>${escHtml(t.text)}</span><span class="br-act">${t.act ? ACCOUNTS[t.act]?.label || t.act : 'Général'}</span></div>`;
+      });
+    }
+    if (html === '') html = '<div class="br-empty">Aucune urgence détectée ✦</div>';
+    items.innerHTML = html;
+  }
+}
+
+// ══════════════════════════════════════════
+// ARIA CHAT (local smart responses)
+// ══════════════════════════════════════════
+const ariaSuggests = {
+  prioris: () => {
+    const urgent = state.tasks.filter(t=>t.level==='urgent');
+    const imp    = state.tasks.filter(t=>t.level==='important');
+    const emails = state.emails.filter(e=>e.priority==='urgent'&&e.isUnread);
+    let r = '<p>Voici vos priorités :</p><ul>';
+    if (emails.length) emails.forEach(e => r += `<li>📧 Email urgent : <strong>${escHtml(e.subject.substring(0,50))}</strong> (${ACCOUNTS[e.account]?.label})</li>`);
+    if (urgent.length) urgent.forEach(t => r += `<li>🔴 ${escHtml(t.text)} — ${t.act ? ACCOUNTS[t.act]?.label || t.act : 'Général'}</li>`);
+    if (imp.length)    imp.slice(0,3).forEach(t => r += `<li>🟡 ${escHtml(t.text)}</li>`);
+    if (!emails.length && !urgent.length && !imp.length) r += '<li>Aucune tâche urgente pour l\'instant — profitez-en pour avancer sur vos projets de fond.</li>';
+    r += '</ul>';
+    return r;
+  },
+  semaine: () => `<p>Voici une suggestion d'organisation pour votre semaine :</p><ul>
+    <li><strong>Lundi-Mardi :</strong> Attard Multimédia — projets clients, facturation</li>
+    <li><strong>Mercredi :</strong> YM BOOST — audits, propositions, suivi restaurants</li>
+    <li><strong>Jeudi :</strong> JDE Agency — briefs, créations, communication</li>
+    <li><strong>Vendredi :</strong> Bobulfilas + bilan semaine</li>
+    <li><strong>Quotidien :</strong> 30 min matin pour les emails urgents</li>
+  </ul><p>Pour une analyse plus poussée de votre semaine, utilisez le bouton "Approfondir avec Claude" ci-dessous.</p>`,
+  emails: () => {
+    const total = state.emails.length;
+    const unread = state.emails.filter(e=>e.isUnread).length;
+    const urgent = state.emails.filter(e=>e.priority==='urgent'&&e.isUnread).length;
+    if (total === 0) return '<p>Aucune boîte Gmail connectée pour le moment. Allez dans <strong>Intégrations</strong> pour connecter vos 4 adresses.</p>';
+    return `<p>Voici l'état de vos emails :</p><ul>
+      <li><strong>${total}</strong> emails chargés au total</li>
+      <li><strong>${unread}</strong> non lus</li>
+      <li><strong>${urgent}</strong> urgents détectés automatiquement</li>
+    </ul><p>Allez dans l'onglet <strong>Emails</strong> pour les consulter triés par priorité.</p>`;
+  },
+  default: [
+    '<p>Je prends note. Pour aller plus loin sur cette question, je vous recommande d\'utiliser le bouton <strong>"Approfondir avec Claude"</strong> — vous êtes déjà abonné Pro, autant en profiter.</p>',
+    '<p>Bonne question. En tant que secrétaire locale, je peux trier vos emails, gérer vos tâches et suivre votre finance. Pour les analyses plus poussées, Claude Pro est votre meilleur allié.</p>',
+    '<p>Noté. Pensez à consulter votre vue <strong>"Aujourd\'hui"</strong> pour une vision claire de vos priorités du jour.</p>'
+  ]
+};
+
+function getAriaResponse(text) {
+  const t = text.toLowerCase();
+  if (t.match(/priorit|urgent|aujourd|todo|tâche/)) return ariaSuggests.prioris();
+  if (t.match(/semaine|week|planning|organisation/)) return ariaSuggests.semaine();
+  if (t.match(/email|mail|boîte|gmail/)) return ariaSuggests.emails();
+  const defs = ariaSuggests.default;
+  return defs[Math.floor(Math.random() * defs.length)];
+}
+
+function ariaSend() {
+  const input = document.getElementById('aria-input');
+  const text = input?.value.trim();
+  if (!text) return;
+  input.value = '';
+  input.style.height = 'auto';
+  appendMsg(text, 'user');
+
+  // Typing indicator
+  const typingId = 'typing_' + Date.now();
+  appendTyping(typingId);
+
+  setTimeout(() => {
+    removeTyping(typingId);
+    const response = getAriaResponse(text);
+    const needClaude = text.length > 60 || text.match(/aide|conseil|stratégie|comment|pourquoi|analyse|rédige/i);
+    appendAriaMsg(response, needClaude, text);
+  }, 900 + Math.random()*600);
+}
+
+function quickMsg(text) {
+  const input = document.getElementById('aria-input');
+  if (input) { input.value = text; ariaSend(); }
+}
+
+function prefill(text) {
+  const input = document.getElementById('aria-input');
+  if (input) { input.value = text; input.focus(); ariaResize(input); }
+}
+
+function appendMsg(text, type) {
+  const msgs = document.getElementById('aria-msgs');
+  if (!msgs) return;
+  const d = document.createElement('div');
+  d.className = 'msg ' + type;
+  const av = type === 'user' ? 'YM' : 'A';
+  d.innerHTML = `<div class="msg-av">${av}</div><div class="msg-bub">${escHtml(text)}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendAriaMsg(html, showClaude, originalText) {
+  const msgs = document.getElementById('aria-msgs');
+  if (!msgs) return;
+  const d = document.createElement('div');
+  d.className = 'msg aria';
+  let chips = '';
+  if (showClaude) {
+    const encoded = encodeURIComponent(originalText);
+    chips = `<div class="msg-chips">
+      <div class="chip claude" onclick="openClaude('${originalText.replace(/'/g,"\\'")}')">✦ Approfondir avec Claude →</div>
+      <div class="chip gpt" onclick="openChatGPT('${originalText.replace(/'/g,"\\'")}')">⬡ Demander à ChatGPT →</div>
+    </div>`;
+  }
+  d.innerHTML = `<div class="msg-av">A</div><div><div class="msg-bub">${html}</div>${chips}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function appendTyping(id) {
+  const msgs = document.getElementById('aria-msgs');
+  if (!msgs) return;
+  const d = document.createElement('div');
+  d.className = 'msg aria';
+  d.id = id;
+  d.innerHTML = `<div class="msg-av">A</div><div class="msg-bub" style="padding:10px 14px"><div class="typing"><div class="td"></div><div class="td"></div><div class="td"></div></div></div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function removeTyping(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+}
+
+function ariaKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); ariaSend(); }
+}
+
+function ariaResize(el) {
+  el.style.height = 'auto';
+  el.style.height = Math.min(el.scrollHeight, 110) + 'px';
+}
+
+// ══════════════════════════════════════════
+// REDIRECT TO CLAUDE / CHATGPT
+// ══════════════════════════════════════════
+function openClaude(prompt) {
+  // Open claude.ai with pre-filled context
+  const encoded = encodeURIComponent(prompt);
+  window.open('https://claude.ai/new?q=' + encoded, '_blank');
+}
+
+function openChatGPT(prompt) {
+  // Open chatgpt.com — no direct pre-fill URL, copy to clipboard
+  navigator.clipboard?.writeText(prompt).then(() => {
+    window.open('https://chatgpt.com/', '_blank');
+    setTimeout(() => alert('Contexte copié dans le presse-papier.\nCollez-le (Cmd+V) dans ChatGPT.'), 500);
+  }).catch(() => {
+    window.open('https://chatgpt.com/', '_blank');
+  });
+}
+
+function askClaude() {
+  const title = document.getElementById('ne-title')?.value || '';
+  const body  = document.getElementById('ne-body')?.value?.substring(0, 300) || '';
+  openClaude(`À propos de ma note "${title}" :\n\n${body}\n\nAide-moi à l'améliorer, structurer ou en tirer des actions concrètes.`);
+}
+
+// ══════════════════════════════════════════
+// TASKS
+// ══════════════════════════════════════════
+function createTask() {
+  const text  = document.getElementById('new-task-text')?.value.trim();
+  const act   = document.getElementById('new-task-act')?.value;
+  const level = document.getElementById('new-task-level')?.value;
+  if (!text) return;
+  state.tasks.push({ id: Date.now(), text, act, level, done: false, date: new Date().toISOString() });
+  saveState();
+  renderTodos();
+  renderTaskByAct();
+  setDates();
+  closeModal('task-modal');
+  document.getElementById('new-task-text').value = '';
+}
+
+function addTodo(e, input) {
+  if (e.key === 'Enter' && input.value.trim()) {
+    state.tasks.push({ id: Date.now(), text: input.value.trim(), act: '', level: 'important', done: false, date: new Date().toISOString() });
+    saveState();
+    renderTodos();
+    renderTaskByAct();
+    setDates();
+    input.value = '';
+  }
+}
+
+function toggleTodo(id, el) {
+  const task = state.tasks.find(t => t.id === id);
+  if (!task) return;
+  task.done = !task.done;
+  saveState();
+  const txt = el.closest('.todo-item')?.querySelector('.todo-txt');
+  el.classList.toggle('done', task.done);
+  if (el.classList.contains('done')) el.textContent = '✓'; else el.textContent = '';
+  if (txt) txt.classList.toggle('done', task.done);
+}
+
+function renderTodos() {
+  const levels = ['urgent', 'important', 'bonus'];
+  levels.forEach(level => {
+    const el = document.getElementById('todo-' + level);
+    if (!el) return;
+    const tasks = state.tasks.filter(t => t.level === level && !t.done);
+    if (tasks.length === 0) {
+      el.innerHTML = `<div style="font-size:12px;color:var(--ink3);padding:8px 11px;font-style:italic">Aucune tâche</div>`;
+      return;
+    }
+    el.innerHTML = tasks.map(t => {
+      const acc = ACCOUNTS[t.act];
+      const dotClass = level === 'urgent' ? 'pu' : level === 'important' ? 'ph2' : 'pl';
+      return `<div class="todo-item">
+        <div class="todo-chk ${t.done ? 'done' : ''}" onclick="toggleTodo(${t.id}, this)">${t.done ? '✓' : ''}</div>
+        <div class="p-dot ${dotClass}"></div>
+        <div class="todo-txt ${t.done ? 'done' : ''}">${escHtml(t.text)}</div>
+        ${acc ? `<span class="atag ${acc.tag}" style="font-size:10px">${acc.label}</span>` : ''}
+        <button onclick="deleteTask(${t.id})" style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:12px;padding:0 2px;opacity:0;transition:opacity .15s" onmouseenter="this.style.opacity=1" onmouseleave="this.style.opacity=0">✕</button>
+      </div>`;
+    }).join('');
+  });
+
+  // Update focus headline
+  const urgents = state.tasks.filter(t => t.level === 'urgent' && !t.done);
+  const headline = document.getElementById('focus-headline');
+  const sub      = document.getElementById('focus-sub');
+  if (headline && urgents.length > 0) {
+    headline.textContent = urgents[0].text;
+    if (sub) sub.textContent = 'C\'est la priorité absolue du moment.';
+  } else if (headline) {
+    headline.textContent = 'Aucune urgence pour le moment';
+    if (sub) sub.textContent = 'Ajoutez vos tâches ou connectez Gmail pour le briefing automatique.';
+  }
+
+  // Update nb badge
+  const count = state.tasks.filter(t => !t.done).length;
+  const badge = document.getElementById('nb-today-count');
+  if (badge) { badge.textContent = count || ''; badge.style.display = count ? '' : 'none'; }
+}
+
+function deleteTask(id) {
+  state.tasks = state.tasks.filter(t => t.id !== id);
+  saveState();
+  renderTodos();
+  renderTaskByAct();
+}
+
+function renderTaskByAct() {
+  const el = document.getElementById('task-by-act');
+  if (!el) return;
+  const acts = ['am','ym','jde','bob'];
+  el.innerHTML = acts.map(key => {
+    const acc   = ACCOUNTS[key];
+    const count = state.tasks.filter(t => t.act === key && !t.done).length;
+    return `<div style="display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--border)">
+      <div style="width:8px;height:8px;border-radius:50%;background:${acc.color};flex-shrink:0"></div>
+      <div style="flex:1;font-size:13px;color:var(--ink)">${acc.label}</div>
+      <div style="font-size:12px;color:var(--ink3)">${count} tâche${count !== 1 ? 's' : ''}</div>
+    </div>`;
+  }).join('') + `<div style="padding-top:4px;padding-bottom:0;border-bottom:none;display:flex;align-items:center;gap:9px;padding:7px 0">
+      <div style="width:8px;height:8px;border-radius:50%;background:var(--ink3);flex-shrink:0"></div>
+      <div style="flex:1;font-size:13px;color:var(--ink)">Général</div>
+      <div style="font-size:12px;color:var(--ink3)">${state.tasks.filter(t => !t.act && !t.done).length} tâche${state.tasks.filter(t => !t.act && !t.done).length !== 1 ? 's' : ''}</div>
+    </div>`;
+}
+
+// ══════════════════════════════════════════
+// NOTES
+// ══════════════════════════════════════════
+function newNote() {
+  const note = { id: Date.now(), title: '', body: '', act: '', date: new Date().toISOString() };
+  state.notes.unshift(note);
+  state.currentNote = note.id;
+  saveState();
+  renderNoteList();
+  document.getElementById('ne-title').value = '';
+  document.getElementById('ne-body').value = '';
+  document.getElementById('ne-act').value = '';
+  document.getElementById('ne-title').focus();
+}
+
+function selectNote(id) {
+  state.currentNote = id;
+  const note = state.notes.find(n => n.id === id);
+  if (!note) return;
+  document.getElementById('ne-title').value = note.title || '';
+  document.getElementById('ne-body').value  = note.body  || '';
+  document.getElementById('ne-act').value   = note.act   || '';
+  document.getElementById('ne-saved').textContent = 'Enregistrée';
+  renderNoteList();
+}
+
+function saveNote() {
+  if (!state.currentNote) return;
+  const note = state.notes.find(n => n.id === state.currentNote);
+  if (!note) return;
+  note.title = document.getElementById('ne-title')?.value || '';
+  note.body  = document.getElementById('ne-body')?.value  || '';
+  note.act   = document.getElementById('ne-act')?.value   || '';
+  note.date  = new Date().toISOString();
+  saveState();
+  const saved = document.getElementById('ne-saved');
+  if (saved) { saved.textContent = 'Enregistrée ✓'; setTimeout(() => { saved.textContent = '—'; }, 2000); }
+  renderNoteList();
+}
+
+function renderNoteList() {
+  const el = document.getElementById('note-list');
+  if (!el) return;
+  const filter = document.getElementById('note-filter')?.value || 'all';
+  let notes = [...state.notes];
+  if (filter !== 'all') notes = notes.filter(n => n.act === filter);
+
+  if (notes.length === 0) {
+    el.innerHTML = `<div class="empty" style="padding:20px"><div class="empty-icon" style="font-size:22px">✏</div><div style="font-size:12px">Aucune note</div></div>`;
+    return;
+  }
+
+  el.innerHTML = notes.map(note => {
+    const acc = note.act ? ACCOUNTS[note.act] : null;
+    const preview = (note.body || '').substring(0, 60).replace(/\n/g, ' ');
+    return `<div class="note-item ${state.currentNote === note.id ? 'active' : ''}" onclick="selectNote(${note.id})">
+      <div class="ni-title">${escHtml(note.title || 'Note sans titre')}</div>
+      <div class="ni-preview">${escHtml(preview) || '...'}</div>
+      <div class="ni-meta">
+        ${acc ? `<span class="atag ${acc.tag}" style="font-size:10px;padding:1px 5px">${acc.label}</span>` : ''}
+        <span class="ni-date">${formatRelDate(note.date)}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function formatRelDate(iso) {
+  const d = new Date(iso);
+  const diff = Date.now() - d;
+  if (diff < 3600000)  return 'À l\'instant';
+  if (diff < 86400000) return 'Aujourd\'hui';
+  if (diff < 172800000) return 'Hier';
+  return d.toLocaleDateString('fr-FR', { day:'numeric', month:'short' });
+}
+
+// ══════════════════════════════════════════
+// FINANCE
+// ══════════════════════════════════════════
+function defaultInvoices() {
+  return [
+    { id:1, act:'ym', num:'YM-2025-07', client:'Restaurant Le Grain',   amount:1800, status:'paid'    },
+    { id:2, act:'ym', num:'YM-2025-08', client:'Brasserie du Port',       amount:1200, status:'pending' },
+    { id:3, act:'ym', num:'YM-2025-09', client:'Pizzeria Napoli',         amount:900,  status:'late'    },
+    { id:4, act:'am', num:'AM-2024-016', client:'Dupont Industries',      amount:3200, status:'paid'    },
+    { id:5, act:'am', num:'AM-2024-017', client:'StartupTech SARL',       amount:1800, status:'paid'    },
+    { id:6, act:'am', num:'AM-2024-018', client:'Agence Bloom',           amount:2100, status:'late'    },
+  ];
+}
+
+function defaultTxns() {
+  return [
+    { id:1, type:'income',  act:'ym', amount:1800, desc:'Conseil mensuel — Le Grain',        date:'2025-03-24' },
+    { id:2, type:'income',  act:'am', amount:3200, desc:'Production vidéo — Dupont',          date:'2025-03-22' },
+    { id:3, type:'expense', act:'am', amount:65,   desc:'Adobe Creative Cloud',               date:'2025-03-20' },
+    { id:4, type:'income',  act:'ym', amount:1200, desc:'Formation cuisine — Brasserie Port', date:'2025-03-18' },
+    { id:5, type:'expense', act:'jde',amount:29,   desc:'Make — abonnement',                  date:'2025-03-15' },
+  ];
+}
+
+function createInvoice() {
+  const inv = {
+    id: Date.now(),
+    act:    document.getElementById('inv-act')?.value    || 'ym',
+    num:    document.getElementById('inv-num')?.value    || 'YM-' + Date.now(),
+    client: document.getElementById('inv-client')?.value || '',
+    amount: parseFloat(document.getElementById('inv-amount')?.value) || 0,
+    status: document.getElementById('inv-status')?.value || 'pending',
+    desc:   document.getElementById('inv-desc')?.value   || '',
+  };
+  if (!inv.client) return;
+  state.invoices.unshift(inv);
+  saveState();
+  renderFinance();
+  closeModal('invoice-modal');
+}
+
+function createTxn() {
+  const txn = {
+    id: Date.now(),
+    type:   document.getElementById('txn-type')?.value   || 'income',
+    act:    document.getElementById('txn-act')?.value    || 'ym',
+    amount: parseFloat(document.getElementById('txn-amount')?.value) || 0,
+    date:   document.getElementById('txn-date')?.value   || new Date().toISOString().split('T')[0],
+    desc:   document.getElementById('txn-desc')?.value   || '',
+  };
+  if (!txn.amount) return;
+  state.transactions.unshift(txn);
+  saveState();
+  renderFinance();
+  closeModal('txn-modal');
+}
+
+function renderFinance() {
+  // KPIs
+  const income  = state.transactions.filter(t=>t.type==='income').reduce((s,t)=>s+t.amount,0);
+  const expense = state.transactions.filter(t=>t.type==='expense').reduce((s,t)=>s+t.amount,0);
+  const pending = state.invoices.filter(i=>i.status==='pending'||i.status==='late').reduce((s,i)=>s+i.amount,0);
+  const kpis = document.getElementById('fin-kpis');
+  if (kpis) kpis.innerHTML = [
+    ['CA ce mois', fmtEur(income),     'var(--sage)'],
+    ['Dépenses',   fmtEur(expense),    '#C04040'    ],
+    ['Marge nette',fmtEur(income-expense),'var(--sage)'],
+    ['En attente', fmtEur(pending),    'var(--caution)'],
+  ].map(([label, val, color]) => `
+    <div class="card" style="padding:14px 16px">
+      <div class="card-title">${label}</div>
+      <div style="font-family:var(--font-serif);font-size:24px;color:${color};margin-top:4px">${val}</div>
+    </div>`).join('');
+
+  // YM invoices
+  const ymInv = document.getElementById('ym-invoices');
+  if (ymInv) ymInv.innerHTML = state.invoices.filter(i=>i.act==='ym').map(i => invoiceRow(i)).join('');
+
+  // AM invoices
+  const amInv = document.getElementById('am-invoices');
+  if (amInv) amInv.innerHTML = state.invoices.filter(i=>i.act==='am').map(i => invoiceRow(i)).join('');
+
+  // Transactions
+  const txnEl = document.getElementById('txn-list');
+  if (txnEl) txnEl.innerHTML = state.transactions.slice(0,8).map(t => {
+    const acc = ACCOUNTS[t.act];
+    const pos = t.type === 'income';
+    return `<div style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--border)">
+      <div style="width:30px;height:30px;border-radius:8px;background:${pos?'var(--sage-bg)':'rgba(192,64,64,0.1)'};display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0">${pos?'💰':'💸'}</div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:500;color:var(--ink)">${escHtml(t.desc)}</div>
+        <div style="font-size:11px;color:var(--ink3)">${acc?.label || t.act} · ${t.date}</div>
+      </div>
+      <div style="font-size:14px;font-weight:600;color:${pos?'var(--sage)':'#C04040'}">${pos?'+':'-'}${fmtEur(t.amount)}</div>
+    </div>`;
+  }).join('');
+}
+
+function invoiceRow(inv) {
+  const statuses = { paid:'sp-ok ✓ Payée', pending:'sp-warn ⏳ En attente', late:'sp-err ⚠ En retard' };
+  const [cls, label] = (statuses[inv.status] || 'sp-info Inconnu').split(' ').reduce((a,v,i) => i===0?[v,a[1]]:[a[0],a[1]+' '+v], ['','']);
+  return `<div style="display:flex;align-items:center;gap:10px;padding:9px 11px;border-radius:var(--rsm);border:1px solid var(--border);margin-bottom:7px;background:var(--bg);cursor:pointer">
+    <div style="font-size:11px;font-weight:600;color:var(--ink2);min-width:75px">${escHtml(inv.num)}</div>
+    <div style="flex:1;font-size:12.5px;color:var(--ink)">${escHtml(inv.client)}</div>
+    <div style="font-size:13px;font-weight:600;color:var(--ink)">${fmtEur(inv.amount)}</div>
+    <span class="spill ${cls}">${label}</span>
+  </div>`;
+}
+
+function fmtEur(n) { return new Intl.NumberFormat('fr-FR',{style:'currency',currency:'EUR',maximumFractionDigits:0}).format(n); }
+
+// ══════════════════════════════════════════
+// MODALS
+// ══════════════════════════════════════════
+function openModal(id)  { document.getElementById(id)?.classList.add('open'); }
+function closeModal(id) { document.getElementById(id)?.classList.remove('open'); }
+function closeMOV(e, id) { if (e.target === document.getElementById(id)) closeModal(id); }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') document.querySelectorAll('.modal-ov.open').forEach(m => m.classList.remove('open')); });
+
+// ══════════════════════════════════════════
+// UTILS
+// ══════════════════════════════════════════
+function escHtml(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
