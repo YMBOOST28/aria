@@ -2094,7 +2094,7 @@ function renderDriveFiles() {
   var top = files.slice().sort(function(a,b){ return new Date(b.modifiedTime) - new Date(a.modifiedTime); }).slice(0, 8);
   el.innerHTML = top.map(function(f) {
     var acc = ACCOUNTS[f.account];
-    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="window.open('' + f.url + '')">' +
+    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="window.open(\'' + f.url + '\')">' +
       '<span style="font-size:15px;flex-shrink:0">' + getMimeIcon(f.mimeType) + '</span>' +
       '<div style="flex:1;min-width:0">' +
       '<div style="font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHtml(f.name) + '</div>' +
