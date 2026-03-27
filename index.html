@@ -459,6 +459,10 @@ a{color:inherit;text-decoration:none}
               <input class="todo-add-in" placeholder="Ajouter une tâche (Entrée pour valider)..." onkeydown="addTodo(event,this)">
             </div>
           </div>
+          <div class="pcrd" style="margin-top:16px">
+            <div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><span>↻ Tâches récurrentes</span><button class="btn-ghost btn-sm" style="font-size:10px;padding:3px 8px" onclick="openModal('recurring-modal')">+ Configurer</button></div>
+            <div id="recurring-task-list"><div style="font-size:12px;color:var(--ink3);font-style:italic;padding:6px 0">Aucune tâche récurrente configurée</div></div>
+          </div>
         </div>
         <div>
           <div class="pcrd">
@@ -474,6 +478,10 @@ a{color:inherit;text-decoration:none}
           <div class="pcrd">
             <div class="card-title">Tâches par activité</div>
             <div id="task-by-act"></div>
+          </div>
+          <div class="pcrd">
+            <div class="card-title" style="display:flex;align-items:center;justify-content:space-between"><span>📁 Fichiers récents</span><span style="font-size:10px;color:var(--ink3)" id="drive-status"></span></div>
+            <div id="drive-files-list"><div style="font-size:12px;color:var(--ink3);font-style:italic">Connectez un compte pour voir vos fichiers Drive</div></div>
           </div>
           <div class="pcrd" style="border-color:rgba(196,113,74,0.3);background:var(--terra-bg)">
             <div class="card-title" style="color:var(--terra)">✦ ARIA suggère</div>
@@ -711,21 +719,23 @@ a{color:inherit;text-decoration:none}
           <div class="int-desc">Alternative IA — ARIA ouvre ChatGPT avec le contexte pré-rempli. Utilise ton abonnement existant.</div>
           <button class="btn-connected">✓ Actif — utilise ton abonnement</button>
         </div>
-        <div class="int-card">
+        <div class="int-card" id="int-card-calendar">
           <div class="int-top">
             <div class="int-logo">📅</div>
             <div><div class="int-name">Google Calendar</div><div class="int-cat">Agenda unifié</div></div>
           </div>
-          <div class="int-desc">Prochaine étape — voir tous vos agendas en un seul endroit une fois Gmail connecté.</div>
-          <button class="btn-connect" onclick="alert('Connectez d\'abord vos comptes Gmail — le calendrier s\'active automatiquement avec la même OAuth.')">Bientôt disponible</button>
+          <div class="int-desc">Vos événements s'affichent automatiquement dans Aujourd'hui dès qu'un compte Gmail est connecté.</div>
+          <div id="status-int-calendar" style="font-size:11px;color:var(--ink3);margin-bottom:8px"></div>
+          <button class="btn-connect" onclick="nav('today', document.querySelector('.nb'))">Voir l'agenda →</button>
         </div>
         <div class="int-card">
           <div class="int-top">
             <div class="int-logo">📁</div>
             <div><div class="int-name">Google Drive</div><div class="int-cat">Factures & documents</div></div>
           </div>
-          <div class="int-desc">Ranger automatiquement vos documents dans les bons dossiers par activité.</div>
-          <button class="btn-connect" onclick="alert('Disponible après connexion Gmail.')">Bientôt disponible</button>
+          <div class="int-desc">Vos 8 derniers fichiers Drive s'affichent dans "Aujourd'hui". Reconnectez vos comptes pour activer Drive.</div>
+          <div id="status-int-drive" style="font-size:11px;color:var(--ink3);margin-bottom:8px"></div>
+          <button class="btn-connect" onclick="nav('today', document.querySelector('.nb'))">Voir les fichiers →</button>
         </div>
       </div>
 
@@ -845,6 +855,44 @@ a{color:inherit;text-decoration:none}
   </div>
 </div>
 
+<!-- Recurring task modal -->
+<div class="modal-ov" id="recurring-modal" onclick="closeMOV(event,'recurring-modal')">
+  <div class="modal">
+    <div class="mh"><div class="mh-title">Tâche récurrente</div><button class="mc" onclick="closeModal('recurring-modal')">✕</button></div>
+    <div class="mb">
+      <div class="fl"><label>Tâche *</label><input type="text" class="fi" id="rec-text" placeholder="Que devez-vous faire ?"></div>
+      <div class="fr">
+        <div class="fl"><label>Activité</label><select class="fs" id="rec-act"><option value="am">Attard MM</option><option value="ym">YM BOOST</option><option value="jde">JDE Agency</option><option value="bob">Bobulfilas</option><option value="">Général</option></select></div>
+        <div class="fl"><label>Niveau</label><select class="fs" id="rec-level"><option value="urgent">Non négociable</option><option value="important" selected>Important</option><option value="bonus">Si le temps</option></select></div>
+      </div>
+      <div class="fl"><label>Récurrence</label>
+        <select class="fs" id="rec-freq" onchange="toggleRecDays()">
+          <option value="daily">Chaque jour</option>
+          <option value="weekdays">Jours outrés (Lun–Ven)</option>
+          <option value="weekly">Certains jours de la semaine</option>
+          <option value="monthly">Mensuel (même date)</option>
+        </select>
+      </div>
+      <div class="fl" id="rec-days-row" style="display:none">
+        <label>Jours</label>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="1" class="rec-day"> Lun</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="2" class="rec-day"> Mar</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="3" class="rec-day"> Mer</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="4" class="rec-day"> Jeu</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="5" class="rec-day"> Ven</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="6" class="rec-day"> Sam</label>
+          <label style="display:flex;align-items:center;gap:4px;font-size:12px"><input type="checkbox" value="0" class="rec-day"> Dim</label>
+        </div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn-ghost btn-sm" onclick="closeModal('recurring-modal')">Annuler</button>
+      <button class="btn-primary btn-sm" onclick="createRecurringTask()">Créer</button>
+    </div>
+  </div>
+</div>
+
 <!-- ══════════════ GOOGLE IDENTITY SERVICES ══════════════ -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
@@ -853,7 +901,7 @@ a{color:inherit;text-decoration:none}
 // CONFIG
 // ══════════════════════════════════════════
 const CLIENT_ID = '932930451924-p0h6ao9elkp0o1a9qkg788pqs6d406a3.apps.googleusercontent.com';
-const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/gmail.readonly https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/drive.readonly';
 
 const ACCOUNTS = {
   am:    { label:'Attard MM',       email:'hub.attard@gmail.com',          color:'var(--am)',    tag:'t-am'   },
@@ -873,6 +921,9 @@ let state = {
   invoices: [],
   transactions: [],
   currentNote: null,
+  calEvents: [],
+  driveFiles: [],
+  recurringTasks: [],
 };
 
 // Load persisted state
@@ -885,7 +936,8 @@ function loadState() {
       state.notes        = parsed.notes        || [];
       state.invoices     = parsed.invoices     || defaultInvoices();
       state.transactions = parsed.transactions || defaultTxns();
-      state.tokens       = parsed.tokens       || {};
+      state.tokens          = parsed.tokens          || {};
+      state.recurringTasks  = parsed.recurringTasks  || [];
     } else {
       state.invoices     = defaultInvoices();
       state.transactions = defaultTxns();
@@ -904,6 +956,7 @@ function saveState() {
       invoices: state.invoices,
       transactions: state.transactions,
       tokens: state.tokens,
+      recurringTasks: state.recurringTasks,
     }));
   } catch(e) {}
 }
@@ -913,6 +966,7 @@ function saveState() {
 // ══════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
+  generateRecurringTasksForToday();
   setDates();
   renderAll();
   checkConnectedAccounts();
@@ -939,6 +993,9 @@ function renderAll() {
   renderFinance();
   renderNoteList();
   updateEmailBadge();
+  renderCalendarEvents();
+  renderDriveFiles();
+  renderRecurringTaskList();
 }
 
 // ══════════════════════════════════════════
@@ -956,7 +1013,7 @@ function nav(id, btn) {
   document.getElementById('page-' + id).classList.add('active');
   if (btn) btn.classList.add('active');
   document.getElementById('tb-title').textContent = PAGE_TITLES[id] || '';
-  if (id === 'today') renderTodos();
+  if (id === 'today') { renderTodos(); renderCalendarEvents(); renderDriveFiles(); renderRecurringTaskList(); }
   if (id === 'notes') renderNoteList();
   if (id === 'finance') renderFinance();
   if (id === 'emails') renderEmailPage();
@@ -988,6 +1045,14 @@ function connectGmail(accountKey) {
       saveState();
       updateAccountStatus(accountKey, true);
       fetchEmailsForAccount(accountKey, response.access_token);
+      fetchCalendarEvents(accountKey, response.access_token).then(evs => {
+        state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
+        renderCalendarEvents();
+      });
+      fetchDriveFiles(accountKey, response.access_token).then(files => {
+        state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
+        renderDriveFiles();
+      });
     },
   });
   tokenClient.requestAccessToken();
@@ -1018,6 +1083,14 @@ function handleOAuthRedirect() {
     saveState();
     updateAccountStatus(accountKey, true);
     fetchEmailsForAccount(accountKey, token);
+    fetchCalendarEvents(accountKey, token).then(evs => {
+      state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
+      renderCalendarEvents();
+    });
+    fetchDriveFiles(accountKey, token).then(files => {
+      state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
+      renderDriveFiles();
+    });
     window.history.replaceState({}, '', window.location.pathname);
   }
 }
@@ -1058,7 +1131,7 @@ async function fetchEmailsForAccount(accountKey, token) {
     // Fetch each message (parallel, max 10)
     const fetched = await Promise.all(
       messages.slice(0, 15).map(m =>
-        fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date`,
+        fetch(`https://gmail.googleapis.com/gmail/v1/users/me/messages/${m.id}?format=metadata&metadataHeaders=From&metadataHeaders=Subject&metadataHeaders=Date&metadataHeaders=To`,
           { headers: { Authorization: 'Bearer ' + token } }
         ).then(r => r.json())
       )
@@ -1075,6 +1148,16 @@ async function fetchEmailsForAccount(accountKey, token) {
 
     // Update briefing
     updateBriefingFromEmails();
+
+    // Also fetch Calendar and Drive with same token
+    fetchCalendarEvents(accountKey, token).then(evs => {
+      state.calEvents = state.calEvents.filter(e => e.account !== accountKey).concat(evs);
+      renderCalendarEvents();
+    });
+    fetchDriveFiles(accountKey, token).then(files => {
+      state.driveFiles = state.driveFiles.filter(f => f.account !== accountKey).concat(files);
+      renderDriveFiles();
+    });
 
   } catch(err) {
     console.error('Gmail fetch error:', err);
@@ -1100,13 +1183,24 @@ function parseGmailMessage(msg, accountKey) {
   const fromName  = fromMatch ? fromMatch[1].replace(/"/g,'').trim() : from;
   const fromEmail = from.match(/<(.+?)>/)? from.match(/<(.+?)>/)[1] : from;
 
-  // Auto-detect priority
-  const urgentKeywords = /urgent|asap|important|rappel|relance|deadline|demain|aujourd'hui|facteur|impayé/i;
-  const priority = urgentKeywords.test(subject + snippet) ? 'urgent' : 'normal';
+  // Auto-detect priority (labels + keywords)
+  const isStarred = msg.labelIds?.includes('IMPORTANT') || msg.labelIds?.includes('STARRED');
+  const urgentKeywords = /urgent|asap|rappel|relance|deadline|demain|aujourd'hui|impayé|retard|action requise|réponse urgente/i;
+  const highPrioSubject = /devis|facture|contrat|signature|validation|appel d|réunion|brief|proposition/i;
+  let priority = 'normal';
+  if (urgentKeywords.test(subject + snippet)) priority = 'urgent';
+  else if (isStarred || highPrioSubject.test(subject)) priority = 'high';
+  // Detect activity from Gmail labels
+  const labelIds = msg.labelIds || [];
+  let detectedAct = accountKey;
+  if (labelIds.some(l => /attard/i.test(l))) detectedAct = 'am';
+  else if (labelIds.some(l => /ym.?boost|ymboost/i.test(l))) detectedAct = 'ym';
+  else if (labelIds.some(l => /jde/i.test(l))) detectedAct = 'jde';
+  else if (labelIds.some(l => /bob|twitch/i.test(l))) detectedAct = 'bob';
 
   return {
     id: msg.id,
-    account: accountKey,
+    account: detectedAct,
     from: fromName,
     fromEmail,
     subject,
@@ -1115,6 +1209,7 @@ function parseGmailMessage(msg, accountKey) {
     dateLabel: formatEmailDate(date),
     isUnread,
     priority,
+    labelIds,
     body: null // loaded on demand
   };
 }
@@ -1198,8 +1293,15 @@ function checkConnectedAccounts() {
   Object.keys(state.tokens).forEach(key => {
     if (state.tokens[key]) {
       updateAccountStatus(key, true);
-      // Refresh emails on load
       fetchEmailsForAccount(key, state.tokens[key]);
+      fetchCalendarEvents(key, state.tokens[key]).then(evs => {
+        state.calEvents = state.calEvents.filter(e => e.account !== key).concat(evs);
+        renderCalendarEvents();
+      });
+      fetchDriveFiles(key, state.tokens[key]).then(files => {
+        state.driveFiles = state.driveFiles.filter(f => f.account !== key).concat(files);
+        renderDriveFiles();
+      });
     }
   });
   const anyConnected = Object.keys(state.tokens).length > 0;
@@ -1866,6 +1968,232 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') document.que
 function escHtml(str) {
   return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
+
+// ════════════════════════════════════════════
+// GOOGLE CALENDAR API
+// ════════════════════════════════════════════
+async function fetchCalendarEvents(accountKey, token) {
+  if (!token) return [];
+  const now = new Date();
+  const y = now.getFullYear(), m = now.getMonth(), d = now.getDate();
+  const startOfDay = new Date(y, m, d).toISOString();
+  const endOfDay   = new Date(y, m, d + 1).toISOString();
+  try {
+    const resp = await fetch(
+      "https://www.googleapis.com/calendar/v3/calendars/primary/events?" +
+      "timeMin=" + encodeURIComponent(startOfDay) + "&timeMax=" + encodeURIComponent(endOfDay) +
+      "&singleEvents=true&orderBy=startTime&maxResults=15",
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    if (!resp.ok) return [];
+    const data = await resp.json();
+    return (data.items || []).map(ev => ({
+      id: ev.id,
+      title: ev.summary || "(Sans titre)",
+      start: ev.start && (ev.start.dateTime || ev.start.date),
+      end:   ev.end   && (ev.end.dateTime   || ev.end.date),
+      allDay: ev.start && !ev.start.dateTime,
+      account: accountKey,
+      location: ev.location || "",
+    }));
+  } catch(e) { return []; }
+}
+
+function renderCalendarEvents() {
+  var el = document.getElementById("cal-events");
+  if (!el) return;
+  var events = state.calEvents || [];
+  var anyConnected = Object.keys(state.tokens).length > 0;
+  var calStatus = document.getElementById("status-int-calendar");
+  if (calStatus) {
+    if (events.length > 0) calStatus.innerHTML = '<span class="spill sp-ok">✓ ' + events.length + ' événement' + (events.length > 1 ? 's' : '') + " aujourd’hui</span>";
+    else if (anyConnected) calStatus.innerHTML = '<span class="spill sp-info">Aucun événement aujourd’hui</span>';
+    else calStatus.innerHTML = '<span class="spill sp-warn">Non connecté</span>';
+  }
+  if (events.length === 0) {
+    el.innerHTML = anyConnected
+      ? '<div style="font-size:12px;color:var(--ink3);padding:12px 0;font-style:italic">Aucun événement aujourd\'hui</div>'
+      : '<div style="font-size:12px;color:var(--ink3);padding:12px 0;font-style:italic">Connectez vos comptes pour voir votre agenda</div>';
+    return;
+  }
+  var sorted = events.slice().sort(function(a, b) { return new Date(a.start) - new Date(b.start); });
+  el.innerHTML = sorted.map(function(ev) {
+    var acc = ACCOUNTS[ev.account];
+    var color = acc ? acc.color : "var(--ink3)";
+    var timeStr = ev.allDay ? "Toute la journée" : formatEventTime(ev.start);
+    var durStr = !ev.allDay && ev.end ? " · " + formatEventDuration(ev.start, ev.end) : "";
+    var locStr = ev.location ? " · " + escHtml(ev.location.substring(0, 25)) : "";
+    return '<div class="cal-ev"><div class="cal-time">' + timeStr + '</div><div class="cal-bar" style="background:' + color + '"></div><div class="cal-info"><div class="cal-title2">' + escHtml(ev.title) + '</div><div class="cal-desc2">' + escHtml(acc ? acc.label : ev.account) + durStr + locStr + '</div></div></div>';
+  }).join("");
+}
+
+function formatEventTime(dateStr) {
+  if (!dateStr) return "";
+  return new Date(dateStr).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit" });
+}
+
+function formatEventDuration(startStr, endStr) {
+  var mins = Math.round((new Date(endStr) - new Date(startStr)) / 60000);
+  if (mins < 60) return mins + " min";
+  var h = Math.floor(mins / 60), m = mins % 60;
+  return m ? h + "h" + String(m).padStart(2, "0") : h + "h";
+}
+
+// ════════════════════════════════════════════
+// GOOGLE DRIVE API
+// ════════════════════════════════════════════
+async function fetchDriveFiles(accountKey, token) {
+  if (!token) return [];
+  try {
+    var resp = await fetch(
+      "https://www.googleapis.com/drive/v3/files?orderBy=modifiedTime+desc&pageSize=8&fields=files(id,name,mimeType,modifiedTime,webViewLink)",
+      { headers: { Authorization: "Bearer " + token } }
+    );
+    if (!resp.ok) return [];
+    var data = await resp.json();
+    return (data.files || []).map(function(f) {
+      return { id: f.id, name: f.name, mimeType: f.mimeType, modifiedTime: f.modifiedTime, url: f.webViewLink, account: accountKey };
+    });
+  } catch(e) { return []; }
+}
+
+var MIME_ICONS = {
+  "application/vnd.google-apps.document": "📄",
+  "application/vnd.google-apps.spreadsheet": "📊",
+  "application/vnd.google-apps.presentation": "🎬",
+  "application/vnd.google-apps.folder": "📁",
+  "application/pdf": "📕",
+};
+
+function getMimeIcon(t) {
+  if (!t) return "📎";
+  if (t.startsWith("image/")) return "🖼";
+  if (t.startsWith("video/")) return "🎬";
+  return MIME_ICONS[t] || "📎";
+}
+
+function renderDriveFiles() {
+  var el = document.getElementById("drive-files-list");
+  if (!el) return;
+  var files = state.driveFiles || [];
+  var anyConnected = Object.keys(state.tokens).length > 0;
+  var driveStatus = document.getElementById("status-int-drive");
+  if (driveStatus) {
+    if (files.length > 0) driveStatus.innerHTML = '<span class="spill sp-ok">✓ ' + files.length + ' fichier' + (files.length > 1 ? 's' : '') + ' chargé' + (files.length > 1 ? 's' : '') + '</span>';
+    else if (anyConnected) driveStatus.innerHTML = '<span class="spill sp-warn">Reconnectez pour activer Drive</span>';
+    else driveStatus.innerHTML = '<span class="spill sp-warn">Non connecté</span>';
+  }
+  var dsEl = document.getElementById("drive-status");
+  if (dsEl && files.length > 0) dsEl.textContent = files.length + " fichier" + (files.length > 1 ? "s" : "");
+  if (files.length === 0) {
+    el.innerHTML = anyConnected
+      ? '<div style="font-size:12px;color:var(--ink3);font-style:italic">Reconnectez vos comptes pour activer Drive</div>'
+      : '<div style="font-size:12px;color:var(--ink3);font-style:italic">Connectez un compte pour voir vos fichiers Drive</div>';
+    return;
+  }
+  var top = files.slice().sort(function(a,b){ return new Date(b.modifiedTime) - new Date(a.modifiedTime); }).slice(0, 8);
+  el.innerHTML = top.map(function(f) {
+    var acc = ACCOUNTS[f.account];
+    return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="window.open('' + f.url + '')">' +
+      '<span style="font-size:15px;flex-shrink:0">' + getMimeIcon(f.mimeType) + '</span>' +
+      '<div style="flex:1;min-width:0">' +
+      '<div style="font-size:12.5px;font-weight:500;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + escHtml(f.name) + '</div>' +
+      '<div style="font-size:11px;color:var(--ink3)">' + escHtml(acc ? acc.label : f.account) + ' · ' + formatRelDate(f.modifiedTime) + '</div>' +
+      '</div></div>';
+  }).join("");
+}
+
+// ════════════════════════════════════════════
+// RECURRING TASKS
+// ════════════════════════════════════════════
+function toggleRecDays() {
+  var freq = document.getElementById("rec-freq") ? document.getElementById("rec-freq").value : "";
+  var row = document.getElementById("rec-days-row");
+  if (row) row.style.display = freq === "weekly" ? "" : "none";
+}
+
+function createRecurringTask() {
+  var textEl = document.getElementById("rec-text");
+  var text = textEl ? textEl.value.trim() : "";
+  var act   = document.getElementById("rec-act")   ? document.getElementById("rec-act").value   : "";
+  var level = document.getElementById("rec-level") ? document.getElementById("rec-level").value : "important";
+  var freq  = document.getElementById("rec-freq")  ? document.getElementById("rec-freq").value  : "daily";
+  if (!text) return;
+  var days = [];
+  if (freq === "weekly") {
+    days = Array.from(document.querySelectorAll(".rec-day:checked")).map(function(cb){ return parseInt(cb.value); });
+    if (days.length === 0) { alert("Sélectionnez au moins un jour."); return; }
+  }
+  var task = { id: Date.now(), text: text, act: act, level: level, freq: freq, days: days, lastGenerated: null };
+  state.recurringTasks.push(task);
+  saveState();
+  renderRecurringTaskList();
+  closeModal("recurring-modal");
+  if (textEl) textEl.value = "";
+  generateRecurringTasksForToday();
+  renderTodos();
+}
+
+function deleteRecurringTask(id) {
+  state.recurringTasks = state.recurringTasks.filter(function(t){ return t.id !== id; });
+  saveState();
+  renderRecurringTaskList();
+}
+
+function shouldRunToday(task) {
+  var today = new Date();
+  var todayStr = today.toISOString().split("T")[0];
+  if (task.lastGenerated === todayStr) return false;
+  var dow = today.getDay();
+  if (task.freq === "daily") return true;
+  if (task.freq === "weekdays") return dow >= 1 && dow <= 5;
+  if (task.freq === "weekly") return task.days.indexOf(dow) !== -1;
+  if (task.freq === "monthly") {
+    if (!task.lastGenerated) return true;
+    var last = new Date(task.lastGenerated);
+    return last.getMonth() !== today.getMonth() || last.getFullYear() !== today.getFullYear();
+  }
+  return false;
+}
+
+function generateRecurringTasksForToday() {
+  var todayStr = new Date().toISOString().split("T")[0];
+  var changed = false;
+  (state.recurringTasks || []).forEach(function(rec) {
+    if (shouldRunToday(rec)) {
+      var alreadyToday = state.tasks.some(function(t){ return t.recurringId === rec.id && (t.date || "").startsWith(todayStr); });
+      if (!alreadyToday) {
+        state.tasks.push({ id: Date.now() + Math.random(), text: rec.text, act: rec.act, level: rec.level, done: false, date: new Date().toISOString(), recurringId: rec.id });
+        rec.lastGenerated = todayStr;
+        changed = true;
+      }
+    }
+  });
+  if (changed) saveState();
+}
+
+function renderRecurringTaskList() {
+  var el = document.getElementById("recurring-task-list");
+  if (!el) return;
+  var tasks = state.recurringTasks || [];
+  if (tasks.length === 0) {
+    el.innerHTML = '<div style="font-size:12px;color:var(--ink3);font-style:italic;padding:6px 0">Aucune tâche récurrente configurée</div>';
+    return;
+  }
+  var freqLabels = { daily: "Quotidien", weekdays: "Lun–Ven", weekly: "Hebdo", monthly: "Mensuel" };
+  var dayNames = ["Dim","Lun","Mar","Mer","Jeu","Ven","Sam"];
+  el.innerHTML = tasks.map(function(t) {
+    var acc = t.act ? ACCOUNTS[t.act] : null;
+    var fl = freqLabels[t.freq] || t.freq;
+    var dl = t.freq === "weekly" && t.days && t.days.length ? " · " + t.days.map(function(d){ return dayNames[d]; }).join(", ") : "";
+    var lvl = t.level === "urgent" ? "🔴" : t.level === "important" ? "🟡" : "🟢";
+    return '<div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)">' +
+      '<div style="flex:1;min-width:0"><div style="font-size:12.5px;font-weight:500;color:var(--ink)">' + escHtml(t.text) + '</div>' +
+      '<div style="font-size:11px;color:var(--ink3)">' + fl + dl + ' · ' + (acc ? acc.label : 'Général') + ' · ' + lvl + '</div></div>' +
+      '<button onclick="deleteRecurringTask(' + t.id + ')" style="background:none;border:none;cursor:pointer;color:var(--ink3);font-size:12px;padding:0 4px" title="Supprimer">✕</button></div>';
+  }).join("");
+}
+
 </script>
 </body>
 </html>
